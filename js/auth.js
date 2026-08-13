@@ -23,9 +23,13 @@ D2D.auth = (() => {
         }
 
         try {
+            // Content-Type is deliberately text/plain, not application/json:
+            // Apps Script Web Apps can't answer a CORS preflight (OPTIONS)
+            // request, so a "simple" request is required to avoid one being
+            // triggered. Code.gs parses the body as JSON regardless.
             const res = await fetch(D2D.backendConfig.GAS_WEB_APP_URL, {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
                 body: JSON.stringify({ action: 'login', email, password })
             });
             const data = await res.json();
