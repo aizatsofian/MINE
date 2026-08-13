@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Data2Dashboard | Sistem Dashboard Website by Dr Excel</title>
+    <meta name="description" content="Data2Dashboard oleh Dr Excel - tukar data sedia ada kepada dashboard, KPI, trend dan insight untuk membuat keputusan lebih baik. Dashboard bermula RM90.">
+
+    <!-- Link kepada fail luaran (akan dibina kemudian) -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+    <!-- Google Sheet-ready architecture (future backend): PRODUCTS, REVIEWS, ORDERS, SETTINGS tabs -->
+
+    <header id="main-header" class="header-sticky">
+        <div class="container header-container">
+            <!-- Sebelah Kiri: Logo -->
+            <div class="logo-container">
+                <a href="index.html" class="logo">
+                    <img src="images/logo.jpg" alt="Dr Excel logo" class="logo-image">
+                    <span class="logo-text">
+                        <h1>Data2<span>Dashboard</span></h1>
+                        <p class="logo-tagline">by Dr Excel</p>
+                    </span>
+                </a>
+            </div>
+
+            <!-- Menu Tengah: Navigasi -->
+            <nav id="main-nav" aria-label="Main Navigation">
+                <button class="mobile-menu-toggle" aria-label="Buka Menu" aria-expanded="false" aria-controls="nav-links">
+                    <span class="hamburger-icon"></span>
+                </button>
+                <ul id="nav-links" class="nav-links">
+                    <li><a href="#hero">Home</a></li>
+                    <li><a href="#marketplace">Dashboard</a></li>
+                    <li><a href="#solutions">Solutions</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#classes">Classes</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                </ul>
+            </nav>
+
+            <!-- Sebelah Kanan: Search & CTA -->
+            <div class="header-actions">
+                <div class="search-box">
+                    <label for="header-search" class="sr-only">Cari dashboard</label>
+                    <input type="search" id="header-search" placeholder="Cari dashboard...">
+                    <button type="button" aria-label="Submit Search">🔍</button>
+                </div>
+                <a href="https://wa.me/60102314951?text=Hi%20Dr%20Aizat%2C%20saya%20berminat%20dengan%20Data2Dashboard%20dan%20ingin%20bertanya%20lanjut." target="_blank" rel="noopener noreferrer" class="btn btn-whatsapp-outline">WhatsApp</a>
+                <a href="#marketplace" class="btn btn-primary">Browse Dashboard</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- ================= HERO ================= -->
+        <section id="hero" class="hero-section">
+            <div class="container hero-container">
+                <div class="hero-content">
+                    <div class="tech-logo-strip" role="img" aria-label="Technology ecosystem: Microsoft Excel, Microsoft Power BI, Looker Studio, Google Sheets, HTML5, CSS3, JavaScript, Supabase">
+                        <span class="tech-logo-chip" title="Microsoft Excel">Excel</span>
+                        <span class="tech-logo-chip" title="Microsoft Power BI">Power BI</span>
+                        <span class="tech-logo-chip" title="Looker Studio / Data Studio">Looker Studio</span>
+                        <span class="tech-logo-chip" title="Google Sheets">Sheets</span>
+                        <span class="tech-logo-chip" title="HTML5">HTML5</span>
+                        <span class="tech-logo-chip" title="CSS3">CSS3</span>
+                        <span class="tech-logo-chip" title="JavaScript">JS</span>
+                        <span class="tech-logo-chip" title="Supabase">Supabase</span>
+                    </div>
+                    <p class="hero-eyebrow">Data2Dashboard <span aria-hidden="true">·</span> Sistem Dashboard Website by Dr Excel</p>
+                    <h2 class="hero-title">Data Dah Ada. <span class="highlight">Insight Belum Ada.</span></h2>
+                    <p class="hero-subtitle">
+                        Tukar data sedia ada kepada dashboard, KPI, trend, analisis dan insight yang membantu anda membuat keputusan dengan lebih baik.
+                    </p>
+                    <p class="hero-desc">
+                        Banyak organisasi sudah mempunyai sistem, database, Excel, Google Sheet, laporan, data pelanggan, data murid, data projek dan data operasi &mdash; tetapi masih sukar mendapatkan analisis dan gambaran menyeluruh daripada data tersebut.
+                    </p>
+                    <p class="hero-price-tag">Dashboard bermula <strong>RM90</strong></p>
+                    <div class="hero-buttons">
+                        <a href="#marketplace" class="btn btn-large btn-primary">Lihat Dashboard</a>
+                        <a href="#marketplace" class="btn btn-large btn-outline">Cuba Demo</a>
+                        <a href="https://wa.me/60102314951?text=Hi%20Dr%20Aizat%2C%20saya%20berminat%20dengan%20Data2Dashboard%20dan%20ingin%20bertanya%20lanjut." target="_blank" rel="noopener noreferrer" class="btn btn-large btn-whatsapp">WhatsApp Dr Aizat</a>
+                    </div>
+                </div>
+                <div class="hero-visual">
+                    <img src="images/pratonton-data2dashboard.png" alt="Pratonton dashboard Data2Dashboard oleh Dr Excel" class="hero-preview-image">
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SOCIAL MEDIA BAR ================= -->
+        <section id="social-bar" class="social-bar-section">
+            <div class="container social-bar-container">
+                <p class="social-bar-label">Follow Dr Excel</p>
+                <ul class="social-bar-list">
+                    <li><a href="https://www.tiktok.com/@drexcelonly" target="_blank" rel="noopener noreferrer" aria-label="TikTok Dr Excel"><span aria-hidden="true">🎵</span> TikTok</a></li>
+                    <li><a href="https://www.threads.com/@onlydrexcel" target="_blank" rel="noopener noreferrer" aria-label="Threads Dr Excel"><span aria-hidden="true">🧵</span> Threads</a></li>
+                    <li><a href="https://www.linkedin.com/in/aizat-sofian-52a20571/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn Dr Aizat"><span aria-hidden="true">💼</span> LinkedIn</a></li>
+                    <li><a href="https://web.facebook.com/profile.php?id=61575615731176" target="_blank" rel="noopener noreferrer" aria-label="Facebook Dr Excel"><span aria-hidden="true">📘</span> Facebook</a></li>
+                    <li><a href="https://www.instagram.com/onlydrexcel/" target="_blank" rel="noopener noreferrer" aria-label="Instagram Dr Excel"><span aria-hidden="true">📸</span> Instagram</a></li>
+                    <li><a href="https://www.youtube.com/@draizatexcel" target="_blank" rel="noopener noreferrer" aria-label="YouTube Dr Excel"><span aria-hidden="true">▶️</span> YouTube</a></li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- ================= QUICK STATISTICS ================= -->
+        <section id="statistics" class="stats-section bg-light">
+            <div class="container stats-grid">
+                <div class="stat-card">
+                    <h3 class="stat-number" id="stat-dashboards" data-value="20">20+</h3>
+                    <p class="stat-label">Dashboard Tersedia</p>
+                </div>
+                <div class="stat-card">
+                    <h3 class="stat-number" id="stat-views" data-value="500">500+</h3>
+                    <p class="stat-label">Demo Views</p>
+                </div>
+                <div class="stat-card">
+                    <h3 class="stat-number" id="stat-customers" data-value="100">100+</h3>
+                    <p class="stat-label">Happy Customers</p>
+                </div>
+                <div class="stat-card">
+                    <h3 class="stat-number" id="stat-rating" data-value="4.9">4.9</h3>
+                    <p class="stat-label">Average Rating ⭐</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SISTEM DAH ADA. KENAPA MASIH PERLUKAN DASHBOARD? ================= -->
+        <section id="why-dashboard" class="comparison-section">
+            <div class="container">
+                <h2 class="section-title text-center">Sistem Dah Ada. Kenapa Masih Perlukan Dashboard?</h2>
+                <p class="section-intro text-center">
+                    Kebanyakan sistem sedia ada dibina untuk proses operasi harian &mdash; bukan untuk analisis pengurusan.
+                </p>
+
+                <div class="flow-compare">
+                    <p class="flow-line flow-existing">Input Data → Simpan Data → Cari Rekod → Papar Table → Print Report</p>
+                    <p class="flow-line flow-d2d">KPI → Filter → Chart → Trend → Comparison → Analysis → Insight → Decision</p>
+                </div>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card comparison-existing">
+                        <h3>Sistem Sedia Ada</h3>
+                        <ul>
+                            <li>Input data</li>
+                            <li>Simpan data</li>
+                            <li>Cari rekod</li>
+                            <li>Paparan table</li>
+                            <li>Individual report</li>
+                            <li>Print report</li>
+                        </ul>
+                    </div>
+                    <div class="comparison-vs" aria-hidden="true">VS</div>
+                    <div class="comparison-card comparison-d2d">
+                        <h3>Data2Dashboard</h3>
+                        <ul>
+                            <li>KPI</li>
+                            <li>Interactive chart</li>
+                            <li>Filter</li>
+                            <li>Trend</li>
+                            <li>Comparison</li>
+                            <li>Monitoring</li>
+                            <li>Analysis</li>
+                            <li>Insight</li>
+                            <li>Decision support</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= PROBLEMS ================= -->
+        <section id="problems" class="problems-section bg-light">
+            <div class="container">
+                <h2 class="section-title text-center">Ada Data, Tetapi Masih Susah Membuat Keputusan?</h2>
+                <div class="problems-grid">
+                    <div class="problem-card">
+                        <div class="problem-number">1</div>
+                        <h3>Sistem Hanya Mengumpul Data</h3>
+                        <p>Banyak organisasi sudah mempunyai sistem tetapi sistem tersebut lebih tertumpu kepada pengumpulan, penyimpanan dan paparan data. Data ada tetapi analisis masih terhad.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">2</div>
+                        <h3>Ada Banyak Data Tetapi Tiada Big Picture</h3>
+                        <p>Ribuan row data tidak semestinya membantu seseorang memahami apa yang sedang berlaku. Pengguna masih perlu mencari sendiri trend, perbandingan dan pola penting.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">3</div>
+                        <h3>Reporting Ada, Analytics Tiada</h3>
+                        <p>Sesetengah sistem boleh menghasilkan table atau laporan tetapi tidak menyediakan analisis interaktif. Pengguna tahu <strong>apa data yang ada</strong> tetapi sukar mengetahui <strong>apa yang data itu sedang beritahu.</strong></p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">4</div>
+                        <h3>Sukar Melihat KPI dan Trend</h3>
+                        <p>Pengurusan mahu melihat KPI, pencapaian, trend, perbandingan, prestasi, perubahan dan perkara yang memerlukan perhatian &mdash; tetapi sistem sedia ada tidak menyediakannya.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">5</div>
+                        <h3>Analisis Masih Manual</h3>
+                        <p>Pengguna terpaksa Export Excel → Filter → Formula → PivotTable → Chart → Screenshot → Report, dan proses yang sama perlu dilakukan berulang kali.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">6</div>
+                        <h3>Kos Upgrade Sistem Tinggi</h3>
+                        <p>Menambah modul analytics kepada sistem sedia ada boleh memerlukan kos pembangunan tambahan. Sesetengah organisasi tidak mempunyai bajet untuk meminta vendor membangunkan modul analytics baharu.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">7</div>
+                        <h3>Sistem Dibina Untuk Operasi, Bukan Analytics</h3>
+                        <p>Sistem asal mungkin sangat baik untuk operasi harian tetapi tidak semestinya direka untuk management analytics dan decision support.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">8</div>
+                        <h3>Data Tidak Digunakan Sepenuhnya</h3>
+                        <p>Data telah dikumpulkan selama berbulan atau bertahun tetapi sebahagian besarnya hanya menjadi rekod. Potensi data tersebut untuk menghasilkan insight masih belum digunakan sepenuhnya.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SOLUTION ================= -->
+        <section id="solutions" class="solution-section bg-dark text-white">
+            <div class="container">
+                <h2 class="section-title text-center">Dari Data Kepada Insight</h2>
+                <div class="solution-flow">
+                    <div class="flow-step"><span>Existing System / Excel / Google Sheet / Database</span></div>
+                    <div class="flow-arrow" aria-hidden="true">↓</div>
+                    <div class="flow-step flow-step-highlight"><span>Data2Dashboard</span></div>
+                    <div class="flow-arrow" aria-hidden="true">↓</div>
+                    <div class="flow-step"><span>KPI + Chart + Filter + Trend + Comparison</span></div>
+                    <div class="flow-arrow" aria-hidden="true">↓</div>
+                    <div class="flow-step"><span>Analysis</span></div>
+                    <div class="flow-arrow" aria-hidden="true">↓</div>
+                    <div class="flow-step"><span>Insight</span></div>
+                    <div class="flow-arrow" aria-hidden="true">↓</div>
+                    <div class="flow-step flow-step-highlight"><span>Better Decision</span></div>
+                </div>
+                <p class="solution-note text-center">
+                    Data2Dashboard tidak semestinya menggantikan sistem yang anda gunakan sekarang. Ia boleh menjadi lapisan analytics tambahan yang membantu menukar data sedia ada kepada maklumat yang lebih mudah difahami.
+                </p>
+            </div>
+        </section>
+
+        <!-- ================= REAL-WORLD USE CASES ================= -->
+        <section id="use-cases" class="usecase-section bg-light">
+            <div class="container">
+                <h2 class="section-title text-center">Sistem Ada. Data Ada. Apa Yang Kurang?</h2>
+                <div class="usecase-grid">
+                    <div class="usecase-card">
+                        <h3>Pendidikan</h3>
+                        <div class="usecase-compare">
+                            <div class="usecase-col">
+                                <h4>Sistem Sedia Ada</h4>
+                                <ul>
+                                    <li>Data murid</li>
+                                    <li>Skor</li>
+                                    <li>Keputusan individu</li>
+                                    <li>Laporan individu</li>
+                                </ul>
+                            </div>
+                            <div class="usecase-col usecase-col-highlight">
+                                <h4>Data2Dashboard</h4>
+                                <ul>
+                                    <li>Prestasi keseluruhan</li>
+                                    <li>Perbandingan kelas</li>
+                                    <li>Kategori</li>
+                                    <li>Distribution</li>
+                                    <li>KPI</li>
+                                    <li>Trend</li>
+                                    <li>Analisis kumpulan</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="usecase-card">
+                        <h3>Customer / Operations</h3>
+                        <div class="usecase-compare">
+                            <div class="usecase-col">
+                                <h4>Sistem Sedia Ada</h4>
+                                <ul>
+                                    <li>Customer records</li>
+                                    <li>Transaction table</li>
+                                    <li>Operation report</li>
+                                </ul>
+                            </div>
+                            <div class="usecase-col usecase-col-highlight">
+                                <h4>Data2Dashboard</h4>
+                                <ul>
+                                    <li>Jumlah pelanggan</li>
+                                    <li>Trend</li>
+                                    <li>Kategori</li>
+                                    <li>Waktu / tempoh</li>
+                                    <li>Performance</li>
+                                    <li>Comparison</li>
+                                    <li>KPI</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= POPULAR DASHBOARD ================= -->
+        <section id="popular-dashboards" class="special-collection">
+            <div class="container">
+                <h2 class="section-title">Popular Dashboard</h2>
+                <!-- Container kosong disediakan untuk JS Inject -->
+                <div id="popular-grid" class="dashboard-grid mini-grid">
+                    <!-- Placeholder untuk 3 dashboard popular -->
+                    <div class="mini-card-placeholder">Ruang Popular #1</div>
+                    <div class="mini-card-placeholder">Ruang Popular #2</div>
+                    <div class="mini-card-placeholder">Ruang Popular #3</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= DASHBOARD COLLECTION / MARKETPLACE ================= -->
+        <section id="marketplace" class="marketplace-section bg-light">
+            <div class="container">
+                <div class="marketplace-header">
+                    <h2 class="section-title">Koleksi Dashboard</h2>
+
+                    <!-- Search dan Sorting -->
+                    <div class="marketplace-controls">
+                        <div class="control-search">
+                            <label for="filter-search" class="sr-only">Cari Dashboard Dalam Koleksi</label>
+                            <input type="search" id="filter-search" placeholder="Cari dashboard...">
+                        </div>
+                        <div class="control-sort">
+                            <label for="sort-select">Sort by:</label>
+                            <select id="sort-select">
+                                <option value="popular">Popular</option>
+                                <option value="newest">Newest</option>
+                                <option value="rating">Highest Rated</option>
+                                <option value="price_low">Price</option>
+                            </select>
+                        </div>
+                        <div class="control-filter">
+                            <label for="tag-select">Filter:</label>
+                            <select id="tag-select">
+                                <option value="all">Semua Dashboard</option>
+                                <option value="featured">Featured</option>
+                                <option value="bestseller">Best Seller</option>
+                                <option value="new">New</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Category Pills -->
+                <div class="category-filter" id="category-filter">
+                    <button class="category-btn active" data-category="All">All</button>
+                    <button class="category-btn" data-category="HSE">HSE</button>
+                    <button class="category-btn" data-category="OSH">OSH</button>
+                    <button class="category-btn" data-category="PAJSK">PAJSK</button>
+                    <button class="category-btn" data-category="Akademik">Akademik</button>
+                    <button class="category-btn" data-category="Kokurikulum">Kokurikulum</button>
+                    <button class="category-btn" data-category="Project">Project</button>
+                    <button class="category-btn" data-category="Finance">Finance</button>
+                    <button class="category-btn" data-category="HR">HR</button>
+                    <button class="category-btn" data-category="Inventory">Inventory</button>
+                    <button class="category-btn" data-category="Operations">Operations</button>
+                    <button class="category-btn" data-category="Education">Education</button>
+                </div>
+
+                <div class="dashboard-grid" id="dashboard-grid">
+
+                    <!-- Card 1: HSE -->
+                    <article class="dashboard-card" data-product-id="DB001" data-category="HSE">
+                        <div class="card-thumbnail">
+                            <span class="card-badge popular">Popular</span>
+                            <img src="https://via.placeholder.com/400x250/1e3a8a/ffffff?text=HSE+Dashboard" alt="Preview HSE KPI Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">HSE</p>
+                            <h3 class="card-title">HSE KPI Dashboard</h3>
+                            <p class="card-desc">Sistem pemantauan Keselamatan dan Kesihatan Pekerjaan dengan analitik insiden dan KPI keselamatan.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.9 (45 reviews)</span>
+                                <span class="meta-views">👁 1,200 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 2: OSH -->
+                    <article class="dashboard-card" data-product-id="DB002" data-category="OSH">
+                        <div class="card-thumbnail">
+                            <span class="card-badge featured">Featured</span>
+                            <img src="https://via.placeholder.com/400x250/2563eb/ffffff?text=OSH+Dashboard" alt="Preview OSH Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">OSH</p>
+                            <h3 class="card-title">OSH Dashboard</h3>
+                            <p class="card-desc">Papar KPI OSH, statistik insiden, audit keselamatan dan trend pematuhan dalam satu paparan.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.8 (30 reviews)</span>
+                                <span class="meta-views">👁 860 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 3: PAJSK -->
+                    <article class="dashboard-card" data-product-id="DB003" data-category="PAJSK">
+                        <div class="card-thumbnail">
+                            <span class="card-badge new">New</span>
+                            <img src="https://via.placeholder.com/400x250/0ea5e9/ffffff?text=PAJSK+Dashboard" alt="Preview PAJSK Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">PAJSK</p>
+                            <h3 class="card-title">PAJSK Dashboard</h3>
+                            <p class="card-desc">Analisis pencapaian PAJSK pelajar mengikut domain, kelas dan tahun dengan carta interaktif.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.7 (18 reviews)</span>
+                                <span class="meta-views">👁 540 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 4: Akademik -->
+                    <article class="dashboard-card" data-product-id="DB004" data-category="Akademik">
+                        <div class="card-thumbnail">
+                            <span class="card-badge bestseller">Best Seller</span>
+                            <img src="https://via.placeholder.com/400x250/1d4ed8/ffffff?text=Akademik+Dashboard" alt="Preview Akademik Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">Akademik</p>
+                            <h3 class="card-title">Akademik Dashboard</h3>
+                            <p class="card-desc">Pantau prestasi akademik pelajar, purata gred, perbandingan kelas dan trend keputusan peperiksaan.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.9 (52 reviews)</span>
+                                <span class="meta-views">👁 1,340 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 5: Kokurikulum -->
+                    <article class="dashboard-card" data-product-id="DB005" data-category="Kokurikulum">
+                        <div class="card-thumbnail">
+                            <img src="https://via.placeholder.com/400x250/3b82f6/ffffff?text=Kokurikulum+Dashboard" alt="Preview Kokurikulum Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">Kokurikulum</p>
+                            <h3 class="card-title">Kokurikulum Dashboard</h3>
+                            <p class="card-desc">Rekod penyertaan dan pencapaian kokurikulum pelajar mengikut unit, kelab dan persatuan.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.6 (14 reviews)</span>
+                                <span class="meta-views">👁 410 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 6: Project Monitoring -->
+                    <article class="dashboard-card" data-product-id="DB006" data-category="Project">
+                        <div class="card-thumbnail">
+                            <span class="card-badge featured">Featured</span>
+                            <img src="https://via.placeholder.com/400x250/1e40af/ffffff?text=Project+Dashboard" alt="Preview Project Monitoring Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">Project</p>
+                            <h3 class="card-title">Project Monitoring Dashboard</h3>
+                            <p class="card-desc">Pantau status projek, bajet dan tugasan team dengan paparan Gantt chart mudah.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.7 (34 reviews)</span>
+                                <span class="meta-views">👁 980 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 7: Kos Projek -->
+                    <article class="dashboard-card" data-product-id="DB007" data-category="Project">
+                        <div class="card-thumbnail">
+                            <img src="https://via.placeholder.com/400x250/1e3a8a/ffffff?text=Kos+Projek+Dashboard" alt="Preview Kos Projek Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">Project</p>
+                            <h3 class="card-title">Kos Projek Dashboard</h3>
+                            <p class="card-desc">Analisis kos projek, perbelanjaan mengikut fasa dan perbandingan bajet vs actual.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.8 (22 reviews)</span>
+                                <span class="meta-views">👁 610 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 8: Operasi Projek -->
+                    <article class="dashboard-card" data-product-id="DB008" data-category="Project">
+                        <div class="card-thumbnail">
+                            <img src="https://via.placeholder.com/400x250/2563eb/ffffff?text=Operasi+Projek+Dashboard" alt="Preview Operasi Projek Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">Project</p>
+                            <h3 class="card-title">Operasi Projek Dashboard</h3>
+                            <p class="card-desc">Pantau status kerja, milestone dan prestasi operasi projek secara real-time.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.7 (16 reviews)</span>
+                                <span class="meta-views">👁 480 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 9: Finance -->
+                    <article class="dashboard-card" data-product-id="DB009" data-category="Finance">
+                        <div class="card-thumbnail">
+                            <span class="card-badge popular">Popular</span>
+                            <img src="https://via.placeholder.com/400x250/0f172a/38bdf8?text=Finance+Dashboard" alt="Preview Finance Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">Finance</p>
+                            <h3 class="card-title">Finance Dashboard</h3>
+                            <p class="card-desc">Laporan kewangan, aliran tunai dan analisis perbelanjaan syarikat harian.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.9 (56 reviews)</span>
+                                <span class="meta-views">👁 1,450 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 10: Result Exam -->
+                    <article class="dashboard-card" data-product-id="DB010" data-category="Akademik">
+                        <div class="card-thumbnail">
+                            <span class="card-badge new">New</span>
+                            <img src="https://via.placeholder.com/400x250/1d4ed8/ffffff?text=Result+Exam+Dashboard" alt="Preview Result Exam Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">Akademik</p>
+                            <h3 class="card-title">Result Exam Dashboard</h3>
+                            <p class="card-desc">Analisis keputusan peperiksaan mengikut subjek, kelas dan gred dengan perbandingan tahun ke tahun.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.8 (27 reviews)</span>
+                                <span class="meta-views">👁 700 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 11: HR -->
+                    <article class="dashboard-card" data-product-id="DB011" data-category="HR">
+                        <div class="card-thumbnail">
+                            <span class="card-badge bestseller">Best Seller</span>
+                            <img src="https://via.placeholder.com/400x250/2b4162/ffffff?text=HR+Dashboard" alt="Preview HR Management Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">HR</p>
+                            <h3 class="card-title">HR Management Dashboard</h3>
+                            <p class="card-desc">Urus rekod pekerja, kehadiran, dan KPI kakitangan dalam satu sistem bersepadu.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.8 (82 reviews)</span>
+                                <span class="meta-views">👁 2,500 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 12: Inventory -->
+                    <article class="dashboard-card" data-product-id="DB012" data-category="Inventory">
+                        <div class="card-thumbnail">
+                            <span class="card-badge new">New</span>
+                            <img src="https://via.placeholder.com/400x250/662e9b/ffffff?text=Inventory+Dashboard" alt="Preview Inventory Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">Inventory</p>
+                            <h3 class="card-title">Inventory Dashboard</h3>
+                            <p class="card-desc">Urus stok barang masuk dan keluar dengan notifikasi stok rendah (low stock alert).</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 5.0 (12 reviews)</span>
+                                <span class="meta-views">👁 430 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 13: Sales Performance -->
+                    <article class="dashboard-card" data-product-id="DB013" data-category="Operations">
+                        <div class="card-thumbnail">
+                            <img src="https://via.placeholder.com/400x250/ea3546/ffffff?text=Sales+Dashboard" alt="Preview Sales Performance Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">Operations</p>
+                            <h3 class="card-title">Sales Performance Dashboard</h3>
+                            <p class="card-desc">Track sales harian, target bulanan, dan prestasi agen jualan syarikat anda.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.6 (28 reviews)</span>
+                                <span class="meta-views">👁 890 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 14: Training -->
+                    <article class="dashboard-card" data-product-id="DB014" data-category="Education">
+                        <div class="card-thumbnail">
+                            <img src="https://via.placeholder.com/400x250/0392cf/ffffff?text=Training+Dashboard" alt="Preview Training Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">Education</p>
+                            <h3 class="card-title">Training Dashboard</h3>
+                            <p class="card-desc">Rekod latihan staf, jam kursus, sijil tamat dan analisis bajet latihan tahunan.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.8 (19 reviews)</span>
+                                <span class="meta-views">👁 600 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                    <!-- Card 15: Asset Management -->
+                    <article class="dashboard-card" data-product-id="DB015" data-category="Operations">
+                        <div class="card-thumbnail">
+                            <span class="card-badge popular">Popular</span>
+                            <img src="https://via.placeholder.com/400x250/7bc043/ffffff?text=Asset+Dashboard" alt="Preview Asset Management Dashboard">
+                        </div>
+                        <div class="card-body">
+                            <p class="card-category">Operations</p>
+                            <h3 class="card-title">Asset Management Dashboard</h3>
+                            <p class="card-desc">Sistem inventori aset syarikat, susut nilai, lokasi aset dan rekod penyelenggaraan.</p>
+                            <div class="card-meta">
+                                <span class="meta-rating">⭐ 4.9 (41 reviews)</span>
+                                <span class="meta-views">👁 1,150 demo views</span>
+                            </div>
+                            <div class="card-price">RM90</div>
+                            <div class="card-price-setup">RM180 Setup Service</div>
+                        </div>
+                        <div class="card-footer">
+                            <button class="btn btn-sm btn-outline demo-btn" data-demo-url="">Cuba Demo</button>
+                            <button class="btn btn-sm btn-outline detail-btn" data-action="view-detail">Lihat Detail</button>
+                            <button class="btn btn-sm btn-primary buy-btn" data-action="buy">Beli RM90</button>
+                            <button class="btn btn-sm btn-outline setup-btn" data-action="setup">Minta Setup RM180</button>
+                        </div>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= 3 CARA DR EXCEL BOLEH MEMBANTU / PRICING ================= -->
+        <section id="services" class="services-section">
+            <div class="container">
+                <h2 class="section-title text-center">Bagaimana Dr Excel Boleh Membantu Anda?</h2>
+                <div class="services-grid">
+
+                    <article class="service-card">
+                        <p class="service-index">01</p>
+                        <h3>Beli Dashboard Siap</h3>
+                        <p class="service-price">RM90 <span class="service-price-tag">Setup Sendiri</span></p>
+                        <p class="service-desc">Pembeli mendapat:</p>
+                        <ul class="service-list">
+                            <li>File coding</li>
+                            <li>README</li>
+                            <li>Panduan setup</li>
+                            <li>Google Sheet template database</li>
+                        </ul>
+                        <a href="#marketplace" class="btn btn-primary btn-full">Browse Dashboard</a>
+                    </article>
+
+                    <article class="service-card service-card-highlight">
+                        <p class="service-index">02</p>
+                        <h3>Kami Setupkan</h3>
+                        <p class="service-price">RM180 <span class="service-price-tag">Setup Service</span></p>
+                        <p class="service-desc">Dr Excel membantu setup perkara berkaitan seperti:</p>
+                        <ul class="service-list">
+                            <li>Coding</li>
+                            <li>Google Apps Script</li>
+                            <li>Google Sheet</li>
+                            <li>Database connection</li>
+                            <li>Deployment / setup berkaitan dashboard</li>
+                        </ul>
+                        <p class="service-note">Skop sebenar bergantung kepada dashboard yang dibeli.</p>
+                        <div class="service-actions">
+                            <a href="#marketplace" class="btn btn-primary btn-full">Pilih Dashboard</a>
+                            <a href="https://wa.me/60102314951?text=Hi%20Dr%20Aizat%2C%20saya%20berminat%20dengan%20pakej%20Dr%20Excel%20Setupkan%20%28RM180%29." target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-full">WhatsApp Dr Aizat</a>
+                        </div>
+                    </article>
+
+                    <article class="service-card" id="custom-dashboard">
+                        <p class="service-index">03</p>
+                        <h3>Custom Dashboard</h3>
+                        <p class="service-desc">Untuk pengguna yang mempunyai data atau keperluan tersendiri. Platform yang ditawarkan:</p>
+                        <ul class="service-list">
+                            <li>Microsoft Excel</li>
+                            <li>Power BI</li>
+                            <li>Looker Studio / Data Studio</li>
+                            <li>Website Dashboard</li>
+                        </ul>
+                        <p class="service-price">RM90 &ndash; RM180 <span class="service-price-tag">Anggaran</span></p>
+                        <p class="service-note">Harga bergantung kepada keperluan. Hubungi untuk quotation.</p>
+                        <a href="https://wa.me/60102314951?text=Hi%20Dr%20Aizat%2C%20saya%20ingin%20mendapatkan%20quotation%20untuk%20Custom%20Dashboard%20berdasarkan%20data%20saya%20sendiri." target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-full">Request Quotation</a>
+                    </article>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= CUSTOMER JOURNEY ================= -->
+        <section id="customer-journey" class="journey-section bg-light">
+            <div class="container">
+                <h2 class="section-title text-center">Apa Yang Anda Perlukan?</h2>
+                <div class="journey-grid">
+                    <a href="#marketplace" class="journey-card">
+                        <h3>Saya Mahu Dashboard Siap</h3>
+                        <p class="journey-price">RM90</p>
+                        <span class="journey-link">Browse Dashboard →</span>
+                    </a>
+                    <a href="#marketplace" class="journey-card">
+                        <h3>Saya Mahu Dr Excel Setupkan</h3>
+                        <p class="journey-price">RM180</p>
+                        <span class="journey-link">Pilih Dashboard →</span>
+                    </a>
+                    <a href="#custom-dashboard" class="journey-card">
+                        <h3>Saya Mahu Dashboard Custom</h3>
+                        <p class="journey-price">RM90 &ndash; RM180</p>
+                        <span class="journey-link">Request Quotation →</span>
+                    </a>
+                    <a href="#classes" class="journey-card">
+                        <h3>Saya Mahu Belajar Buat Sendiri</h3>
+                        <p class="journey-price">RM140</p>
+                        <span class="journey-link">Join Kelas →</span>
+                    </a>
+                    <a href="#consultation" class="journey-card">
+                        <h3>Saya Ada Masalah Kecil</h3>
+                        <p class="journey-price">Excel / Power BI / Website</p>
+                        <span class="journey-link">WhatsApp Dr Aizat →</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= HOW IT WORKS ================= -->
+        <section id="how-it-works" class="steps-section">
+            <div class="container">
+                <h2 class="section-title text-center">Cara Pembelian</h2>
+                <div class="steps-container">
+                    <div class="step-item">
+                        <div class="step-number">1</div>
+                        <h4>Pilih Dashboard</h4>
+                        <p>Browse koleksi dashboard kami.</p>
+                    </div>
+                    <div class="step-divider" aria-hidden="true">→</div>
+                    <div class="step-item">
+                        <div class="step-number">2</div>
+                        <h4>Cuba Demo</h4>
+                        <p>Gunakan dashboard secara interaktif.</p>
+                    </div>
+                    <div class="step-divider" aria-hidden="true">→</div>
+                    <div class="step-item">
+                        <div class="step-number">3</div>
+                        <h4>Pilih RM90 / RM180</h4>
+                        <p>Pilih Setup Sendiri atau Dr Excel Setupkan.</p>
+                    </div>
+                    <div class="step-divider" aria-hidden="true">→</div>
+                    <div class="step-item">
+                        <div class="step-number">4</div>
+                        <h4>Scan DuitNow QR</h4>
+                        <p>Buat pembayaran mengikut pakej dipilih.</p>
+                    </div>
+                    <div class="step-divider" aria-hidden="true">→</div>
+                    <div class="step-item">
+                        <div class="step-number">5</div>
+                        <h4>WhatsApp Bukti</h4>
+                        <p>Hantar resit bayaran untuk pengesahan.</p>
+                    </div>
+                    <div class="step-divider" aria-hidden="true">→</div>
+                    <div class="step-item">
+                        <div class="step-number">6</div>
+                        <h4>Terima Dashboard</h4>
+                        <p>Dr Excel sahkan dan hantar fail / setup.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= LATEST DASHBOARD ================= -->
+        <section id="latest-dashboards" class="special-collection bg-light">
+            <div class="container">
+                <h2 class="section-title">Latest Dashboard</h2>
+                <div id="latest-grid" class="dashboard-grid mini-grid">
+                    <!-- Placeholder untuk JS -->
+                    <div class="mini-card-placeholder">Ruang Latest #1</div>
+                    <div class="mini-card-placeholder">Ruang Latest #2</div>
+                    <div class="mini-card-placeholder">Ruang Latest #3</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= TESTIMONIALS ================= -->
+        <section id="testimonials" class="testimonials-section">
+            <div class="container">
+                <h2 class="section-title text-center">Apa Kata Pengguna Kami</h2>
+                <div class="testimonial-grid">
+                    <blockquote class="testimonial-card">
+                        <p class="quote">"Sangat membantu perniagaan saya merekod stok dengan tepat. Harganya juga sangat murah berbanding sistem diluar sana."</p>
+                        <footer class="author">
+                            <strong>- Hafiz R.</strong>
+                            <span>Manager</span>
+                        </footer>
+                    </blockquote>
+                    <blockquote class="testimonial-card">
+                        <p class="quote">"Saya tiada asas programming tapi berjaya setup sistem ini menggunakan Google Sheet hasil rujukan documentasi yang diberikan."</p>
+                        <footer class="author">
+                            <strong>- Nurin Aisyah</strong>
+                            <span>SME Owner</span>
+                        </footer>
+                    </blockquote>
+                    <blockquote class="testimonial-card">
+                        <p class="quote">"Design sangat kemas. KPI nampak jelas. Saya sangat cadangkan HSE Dashboard kepada Safety Officer lain."</p>
+                        <footer class="author">
+                            <strong>- Kumar S.</strong>
+                            <span>HSE Officer</span>
+                        </footer>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= KELAS ANALISIS DATA & DASHBOARD ================= -->
+        <section id="classes" class="class-section bg-dark text-white">
+            <div class="container">
+                <h2 class="section-title text-center">Belajar Analisis Data &amp; Bina Dashboard Dengan AI</h2>
+                <p class="class-intro text-center">
+                    Dr Excel turut menyediakan kelas <strong>Analisis Data dan Pembinaan Dashboard Menggunakan Excel &amp; Power BI dengan Bantuan AI</strong>.
+                </p>
+
+                <div class="class-content">
+                    <div class="class-price-block">
+                        <p class="class-price">RM140</p>
+                        <p class="class-price-note">Bayar sekali dan dapat akses kelas setiap hari Rabu.</p>
+                    </div>
+
+                    <div class="class-details-grid">
+                        <div class="class-details-col">
+                            <h4>Pakej Kelas Termasuk</h4>
+                            <ul class="feature-list feature-list-white">
+                                <li>Kelas setiap hari Rabu</li>
+                                <li>Rakaman kelas</li>
+                                <li>Workbook</li>
+                                <li>Slide</li>
+                                <li>Buku Excel</li>
+                                <li>Resit untuk tujuan claim</li>
+                                <li>Pelbagai topik dashboard</li>
+                            </ul>
+                        </div>
+                        <div class="class-details-col">
+                            <h4>Topik Termasuk</h4>
+                            <div class="tech-tags">
+                                <span class="tag">HSE</span>
+                                <span class="tag">OSH</span>
+                                <span class="tag">PAJSK</span>
+                                <span class="tag">Akademik</span>
+                                <span class="tag">Kokurikulum</span>
+                                <span class="tag">Projek</span>
+                                <span class="tag">Kos Projek</span>
+                                <span class="tag">Operasi Projek</span>
+                                <span class="tag">Kewangan</span>
+                                <span class="tag">Result Exam</span>
+                                <span class="tag">dan lain-lain</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="class-buttons text-center">
+                    <a href="https://chat.whatsapp.com/EYhpG5iP5s6EJXfy4UL79p?s=cl&amp;p=a&amp;ilr=4" target="_blank" rel="noopener noreferrer" class="btn btn-large btn-whatsapp">Join Group WhatsApp Kelas</a>
+                    <a href="https://wa.me/60102314951?text=Hi%20Dr%20Aizat%2C%20saya%20berminat%20dengan%20kelas%20Analisis%20Data%20%26%20Dashboard%20RM140." target="_blank" rel="noopener noreferrer" class="btn btn-large btn-outline">WhatsApp Dr Aizat</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= SMALL PROBLEM / CONSULTATION ================= -->
+        <section id="consultation" class="consultation-section">
+            <div class="container consultation-container text-center">
+                <h2 class="section-title">Ada Masalah Dengan Data atau Dashboard?</h2>
+                <p>
+                    Boleh hubungi Dr Aizat jika anda mempunyai masalah kecil berkaitan Excel, Power BI, Website Dashboard, Formula, Data, Chart, Dashboard atau Reporting.
+                </p>
+                <a href="https://wa.me/60102314951?text=Hi%20Dr%20Aizat%2C%20saya%20ada%20masalah%20berkaitan%20Excel%20%2F%20Power%20BI%20%2F%20Website%20Dashboard%20dan%20ingin%20bertanya." target="_blank" rel="noopener noreferrer" class="btn btn-large btn-whatsapp">WhatsApp Dr Aizat</a>
+                <p class="consultation-number">010-231 4951</p>
+            </div>
+        </section>
+
+        <!-- ================= ABOUT DR EXCEL ================= -->
+        <section id="about" class="about-section bg-light">
+            <div class="container about-container">
+                <h2 class="section-title text-center">About Dr Excel</h2>
+                <p>
+                    Dr Excel ditubuhkan pada tahun 2022 sebagai satu inisiatif untuk membantu individu dan organisasi menggunakan data dengan lebih baik.
+                </p>
+                <p>
+                    Inisiatif ini bermula selepas melihat banyak data dikumpulkan tetapi tidak diurus, dianalisis atau digunakan sepenuhnya. Keadaan ini boleh menyebabkan laporan penting tidak tersedia, keputusan dibuat tanpa analisis yang mencukupi, penggunaan sumber dan kewangan kurang tepat, pola penting dalam data tidak dikenal pasti, dan data yang dikumpulkan tidak menghasilkan insight.
+                </p>
+                <p>
+                    Melihat kepada jurang tersebut, Dr Excel mula membantu klien menyusun, menganalisis dan memvisualisasikan data supaya data boleh ditukar kepada insight yang berguna. Insight tersebut boleh membantu dalam decision making, polisi, pengurusan, sistem, operasi, kewangan, monitoring dan reporting.
+                </p>
+            </div>
+        </section>
+
+        <!-- ================= MEET THE FOUNDERS ================= -->
+        <section id="founders" class="founders-section">
+            <div class="container">
+                <h2 class="section-title text-center">Meet The Founders</h2>
+                <div class="founders-grid">
+                    <div class="founder-card">
+                        <h3>Dr Aizat, MBBCh</h3>
+                        <p class="founder-title">Statistician | Co-Founder, Dr Excel</p>
+                        <a href="https://bit.ly/4fYYKeh" target="_blank" rel="noopener noreferrer" class="btn btn-outline">About Dr Aizat</a>
+                    </div>
+                    <div class="founder-card">
+                        <h3>Dr Juliana, MBBCh</h3>
+                        <p class="founder-title">Co-Founder, Dr Excel</p>
+                        <p class="founder-placeholder">Maklumat lanjut akan dikemaskini tidak lama lagi.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= FAQ ================= -->
+        <section id="faq" class="faq-section bg-light">
+            <div class="container faq-container">
+                <h2 class="section-title text-center">Soalan Lazim (FAQ)</h2>
+                <div class="accordion">
+                    <details class="faq-item">
+                        <summary>Adakah saya boleh cuba dashboard sebelum membeli?</summary>
+                        <div class="faq-content">
+                            <p>Ya. Anda boleh menekan butang "Cuba Demo" pada mana-mana kad dashboard untuk melihat dan mencuba fungsi sistem sebenar sebelum membuat pembelian.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Berapa harga setiap dashboard?</summary>
+                        <div class="faq-content">
+                            <p>Setiap dashboard ditawarkan dengan dua pilihan: <strong>RM90</strong> (Setup Sendiri &mdash; anda terima fail, README dan template Google Sheet) atau <strong>RM180</strong> (Dr Excel Setupkan &mdash; kami bantu setup coding, Google Apps Script, Google Sheet dan sambungan database), kecuali jika dinyatakan sebaliknya.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Apa yang saya akan terima selepas pembelian?</summary>
+                        <div class="faq-content">
+                            <p>Untuk pakej RM90, anda akan menerima fail sumber (HTML, CSS, JS), README dan template Google Sheet. Untuk pakej RM180, Dr Excel turut membantu setup berkaitan Google Apps Script, Google Sheet dan sambungan database mengikut skop dashboard yang dibeli.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Adakah dashboard boleh diubah (customize)?</summary>
+                        <div class="faq-content">
+                            <p>Ya. Kod yang diberikan adalah terbuka. Anda bebas untuk mengubahsuai design atau menambah fungsi mengikut kepakaran anda, atau hubungi Dr Excel untuk Custom Dashboard.</p>
+                        </div>
+                    </details>
+                    <details class="faq-item">
+                        <summary>Bagaimana saya menerima dashboard selepas bayar?</summary>
+                        <div class="faq-content">
+                            <p>Pembayaran dibuat melalui DuitNow QR. Selepas membuat pemindahan wang, hantar bukti resit melalui WhatsApp. Fail dashboard atau setup akan diberikan kepada anda melalui WhatsApp atau Email selepas pengesahan.</p>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+
+        <!-- ================= FINAL CTA ================= -->
+        <section id="final-cta" class="cta-section text-center">
+            <div class="container cta-container">
+                <h2>Data Anda Dah Ada. Sekarang Jadikan Ia Berguna.</h2>
+                <p>Cuba dashboard, pilih sistem yang sesuai atau hubungi Dr Excel untuk dashboard berdasarkan data anda sendiri.</p>
+                <div class="cta-buttons">
+                    <a href="#marketplace" class="btn btn-large btn-primary">Browse Dashboard</a>
+                    <a href="https://wa.me/60102314951?text=Hi%20Dr%20Aizat%2C%20saya%20berminat%20dengan%20Data2Dashboard%20dan%20ingin%20bertanya%20lanjut." target="_blank" rel="noopener noreferrer" class="btn btn-large btn-outline">WhatsApp Dr Aizat</a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer id="footer" class="main-footer text-white bg-dark">
+        <div class="container footer-grid">
+            <div class="footer-brand">
+                <div class="footer-logo-row">
+                    <img src="images/logo.jpg" alt="Dr Excel logo" class="footer-logo-image">
+                    <h3>Data2<span>Dashboard</span></h3>
+                </div>
+                <p class="footer-tagline">by Dr Excel</p>
+                <p>Tukar data sedia ada kepada dashboard, KPI, trend dan insight untuk membuat keputusan yang lebih baik.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#marketplace">Dashboard</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#custom-dashboard">Custom Dashboard</a></li>
+                    <li><a href="#classes">Classes</a></li>
+                    <li><a href="#testimonials">Reviews</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#faq">FAQ</a></li>
+                    <li><a href="#consultation">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-contact" id="footer-contact">
+                <h4>Hubungi Kami</h4>
+                <p class="footer-whatsapp-number">WhatsApp: 010-231 4951</p>
+                <ul class="social-links">
+                    <li><a href="https://wa.me/60102314951" target="_blank" rel="noopener noreferrer">📱 WhatsApp</a></li>
+                    <li><a href="https://www.tiktok.com/@drexcelonly" target="_blank" rel="noopener noreferrer">🎵 TikTok</a></li>
+                    <li><a href="https://www.threads.com/@onlydrexcel" target="_blank" rel="noopener noreferrer">🧵 Threads</a></li>
+                    <li><a href="https://www.linkedin.com/in/aizat-sofian-52a20571/" target="_blank" rel="noopener noreferrer">💼 LinkedIn</a></li>
+                    <li><a href="https://web.facebook.com/profile.php?id=61575615731176" target="_blank" rel="noopener noreferrer">📘 Facebook</a></li>
+                    <li><a href="https://www.instagram.com/onlydrexcel/" target="_blank" rel="noopener noreferrer">📸 Instagram</a></li>
+                    <li><a href="https://www.youtube.com/@draizatexcel" target="_blank" rel="noopener noreferrer">▶️ YouTube</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="container flex-between">
+                <p>&copy; 2026 Data2Dashboard by Dr Excel. Hak Cipta Terpelihara.</p>
+                <ul class="legal-links">
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms &amp; Conditions</a></li>
+                    <li><a href="admin/index.html">Admin Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========================================== -->
+    <!-- SEMUA MODAL & DIALOG DISEDIAKAN DI SINI    -->
+    <!-- ========================================== -->
+
+    <dialog id="product-detail-modal" class="modal" aria-labelledby="modal-title">
+        <div class="modal-dialog">
+            <button class="modal-close" aria-label="Tutup" formmethod="dialog">&times;</button>
+            <div class="modal-body-flow">
+
+                <!-- 1. Preview dashboard -->
+                <img id="detail-image" class="detail-hero-image" src="https://via.placeholder.com/600x400/eeeeee/999999?text=Preview" alt="Product Image">
+
+                <!-- 2. Nama dashboard -->
+                <p class="modal-category" id="detail-category">Category Placeholder</p>
+                <h2 id="modal-title" class="detail-title">Nama Dashboard Placeholder</h2>
+
+                <!-- 3. Harga -->
+                <div class="detail-section detail-pricing">
+                    <h3>Harga</h3>
+                    <p class="detail-price-lead">Bermula <span id="detail-price" class="detail-price">RM90</span></p>
+                    <div class="pricing-mini-grid">
+                        <div class="pricing-mini-card">
+                            <h4>RM90 <span class="pricing-mini-tag">Setup Sendiri</span></h4>
+                            <ul>
+                                <li>File coding</li>
+                                <li>README / panduan setup</li>
+                                <li>Google Sheet template database</li>
+                            </ul>
+                        </div>
+                        <div class="pricing-mini-card">
+                            <h4>RM180 <span class="pricing-mini-tag">Dr Excel Setupkan</span></h4>
+                            <ul>
+                                <li>Coding</li>
+                                <li>Google Apps Script</li>
+                                <li>Google Sheet</li>
+                                <li>Sambungan database</li>
+                                <li>Konfigurasi dashboard berkaitan</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Description -->
+                <div class="detail-section">
+                    <h3>Penerangan</h3>
+                    <p id="detail-desc">Penerangan terperinci mengenai dashboard ini akan diletakkan di sini.</p>
+                </div>
+
+                <!-- 5. Features -->
+                <div class="detail-section">
+                    <h3>Ciri-ciri Utama (Features)</h3>
+                    <ul id="detail-features" class="feature-list">
+                        <li>Responsive dashboard</li>
+                        <li>KPI cards</li>
+                        <li>Interactive charts</li>
+                        <li>Filter / slicer</li>
+                        <li>Search functionality</li>
+                        <li>Data table</li>
+                        <li>CRUD compatible</li>
+                        <li>Mobile friendly</li>
+                    </ul>
+                </div>
+
+                <!-- 6. Technology / Database -->
+                <div class="detail-section">
+                    <h3>Technology / Database</h3>
+                    <div id="detail-tech" class="tech-tags">
+                        <span class="tag">HTML5</span>
+                        <span class="tag">CSS3</span>
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">Microsoft Excel</span>
+                        <span class="tag">Microsoft Power BI</span>
+                        <span class="tag">Google Apps Script</span>
+                        <span class="tag">Google Sheet</span>
+                    </div>
+                </div>
+
+                <!-- 7. Apa yang pembeli dapat -->
+                <div class="detail-section">
+                    <h3>Apa Yang Anda Terima</h3>
+                    <p>Folder projek yang mengandungi fail kod sumber sepenuhnya berserta dokumentasi pemasangan. Pakej RM180 turut termasuk bantuan setup oleh Dr Excel.</p>
+                </div>
+
+                <!-- 8. Rating summary -->
+                <div class="detail-section detail-rating-summary">
+                    <h3>Rating Summary</h3>
+                    <div class="rating-summary-row">
+                        <span class="summary-score"><span id="detail-rating-score">4.9</span> / 5</span>
+                        <span class="summary-stars">⭐⭐⭐⭐⭐</span>
+                        <span class="summary-count">Berdasarkan <span id="review-total">26</span> Reviews</span>
+                    </div>
+                </div>
+
+                <!-- 9. Customer Reviews (compact, internal scroll) -->
+                <div class="modal-reviews-section" id="reviews-section">
+                    <div class="review-header">
+                        <h3>Customer Reviews</h3>
+                        <button class="btn btn-sm btn-outline" id="btn-write-review">Tulis Review</button>
+                    </div>
+
+                    <!-- Senarai Review Public (Tiada Nombor Telefon Dipaparkan) -->
+                    <div class="review-list" id="review-list-container">
+                        <!-- Sample Review 1 -->
+                        <div class="review-item">
+                            <div class="reviewer-meta">
+                                <strong>Ahmad</strong> <span class="review-date">12 Ogos 2026</span>
+                            </div>
+                            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                            <p class="review-text">"Dashboard sangat mudah digunakan dan mudah customize. Jimat banyak masa company saya."</p>
+                        </div>
+                        <!-- Sample Review 2 -->
+                        <div class="review-item">
+                            <div class="reviewer-meta">
+                                <strong>Siti</strong> <span class="review-date">05 Ogos 2026</span>
+                            </div>
+                            <div class="review-stars">⭐⭐⭐⭐⭐</div>
+                            <p class="review-text">"Design kemas dan senang difahami. Setup ke Google Sheet pun tak susah berpandukan tutorial."</p>
+                        </div>
+                    </div>
+
+                    <div class="review-form-container" id="review-form-container" style="display: none;">
+                        <h4>Tinggalkan Review Anda</h4>
+                        <form id="review-form" class="standard-form">
+                            <!-- Hidden Inputs untuk Backend / Moderation -->
+                            <input type="hidden" id="form-product-id" name="product_id">
+                            <input type="hidden" id="form-timestamp" name="timestamp">
+                            <input type="hidden" id="form-status" name="status" value="Pending">
+
+                            <div class="form-group">
+                                <label for="review-name">Nama <span class="required">*</span></label>
+                                <input type="text" id="review-name" name="name" required placeholder="Nama anda">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="review-phone">No. Telefon / WhatsApp <span class="required">*</span></label>
+                                <input type="tel" id="review-phone" name="phone" required placeholder="Cth: 0123456789">
+                                <small class="privacy-note text-muted">Nombor telefon anda <strong>tidak akan dipaparkan</strong> kepada umum. Ia hanya digunakan sekiranya kami perlu menghubungi anda berkaitan review atau pembelian.</small>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="review-rating">Rating <span class="required">*</span></label>
+                                <select id="review-rating" name="rating" required>
+                                    <option value="5">⭐⭐⭐⭐⭐ - Sangat Memuaskan</option>
+                                    <option value="4">⭐⭐⭐⭐ - Memuaskan</option>
+                                    <option value="3">⭐⭐⭐ - Sederhana</option>
+                                    <option value="2">⭐⭐ - Kurang Memuaskan</option>
+                                    <option value="1">⭐ - Mengecewakan</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="review-comment">Komen <span class="required">*</span></label>
+                                <textarea id="review-comment" name="comment" rows="4" required placeholder="Kongsi pengalaman anda menggunakan dashboard ini..."></textarea>
+                            </div>
+
+                            <div class="form-group checkbox-group">
+                                <label>
+                                    <input type="checkbox" id="review-consent" name="consent" required>
+                                    Saya bersetuju maklumat ini disimpan untuk tujuan pengurusan review dan komunikasi berkaitan produk.
+                                </label>
+                            </div>
+
+                            <div class="form-actions">
+                                <button type="button" class="btn btn-outline" id="btn-cancel-review">Batal</button>
+                                <button type="submit" class="btn btn-primary">Hantar Review</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 10. Action buttons -->
+                <div class="detail-actions">
+                    <button class="btn btn-outline btn-full demo-btn" id="detail-demo-btn" data-demo-url="">Cuba Demo Interaktif</button>
+                    <div class="detail-buy-row">
+                        <button class="btn btn-primary buy-btn" id="detail-buy-btn">Beli RM90</button>
+                        <button class="btn btn-outline setup-btn" id="detail-setup-btn" data-action="setup">Beli RM180</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="payment-modal" class="modal modal-sm" aria-labelledby="payment-title">
+        <div class="modal-dialog">
+            <button class="modal-close" aria-label="Tutup" formmethod="dialog">&times;</button>
+            <div class="payment-content text-center">
+                <h2 id="payment-title">Pembelian Dashboard</h2>
+
+                <div class="payment-product-summary">
+                    <p><strong>Dashboard Dipilih:</strong></p>
+                    <p id="pay-product-name" class="highlight-text">Nama Dashboard Placeholder</p>
+                    <p class="pay-price">RM90</p>
+                </div>
+
+                <div class="payment-package-select" id="payment-package-select">
+                    <p class="package-select-label">Pilih Pakej:</p>
+                    <div class="package-options">
+                        <button type="button" class="package-option active" data-package="90">RM90<br><span>Setup Sendiri</span></button>
+                        <button type="button" class="package-option" data-package="180">RM180<br><span>Dr Excel Setupkan</span></button>
+                    </div>
+                    <input type="hidden" id="pay-package" value="90">
+                </div>
+
+                <div class="payment-method-section">
+                    <h3>Cara Pembayaran</h3>
+                    <div class="qr-container">
+                        <!-- Placeholder QR Code -->
+                        <img src="https://via.placeholder.com/200x200/ffffff/000000?text=DUITNOW+QR" alt="DuitNow QR Code" class="qr-image">
+                        <p class="qr-label"><strong>DUITNOW QR</strong></p>
+                    </div>
+                    <p class="instruction-text">
+                        Sila scan kod QR di atas untuk membuat pembayaran mengikut pakej dipilih. <br>
+                        Selepas membuat pembayaran, isikan borang di bawah dan klik butang WhatsApp untuk menghantar <strong>bukti pembayaran (resit)</strong>.
+                    </p>
+                </div>
+
+                <form id="payment-form" class="standard-form text-left">
+                    <div class="form-group">
+                        <label for="buyer-name" class="sr-only">Nama Pembeli</label>
+                        <input type="text" id="buyer-name" placeholder="Nama Anda" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="buyer-phone" class="sr-only">No. WhatsApp</label>
+                        <input type="tel" id="buyer-phone" placeholder="No. WhatsApp Anda (Cth: 0123456789)" required>
+                    </div>
+
+                    <!-- Hidden field untuk dihantar ke WhatsApp -->
+                    <input type="hidden" id="pay-hidden-product" value="">
+
+                    <button type="button" id="btn-submit-whatsapp" class="btn btn-full btn-whatsapp">
+                        <span class="icon">💬</span> Hantar Bukti Bayaran melalui WhatsApp
+                    </button>
+                </form>
+            </div>
+        </div>
+    </dialog>
+
+    <dialog id="demo-maintenance-modal" class="modal modal-sm" aria-labelledby="maintenance-title">
+        <div class="modal-dialog">
+            <button class="modal-close" aria-label="Tutup" formmethod="dialog">&times;</button>
+            <div class="maintenance-content text-center">
+                <p class="maintenance-icon" aria-hidden="true">🛠️</p>
+                <h2 id="maintenance-title">Website Dashboard On Maintenance</h2>
+                <p>Demo Website Dashboard untuk produk ini sedang dalam penyediaan.</p>
+                <p class="maintenance-note">Versi Power BI Dashboard tersedia untuk demo.</p>
+                <a href="#" id="btn-whatsapp-powerbi" target="_blank" rel="noopener noreferrer" class="btn btn-large btn-whatsapp">WhatsApp Untuk Dapatkan Power BI Dashboard</a>
+            </div>
+        </div>
+    </dialog>
+
+    <!-- Floating WhatsApp Button -->
+    <a href="https://wa.me/60102314951?text=Hi%20Dr%20Aizat%2C%20saya%20ingin%20bertanya%20mengenai%20Data2Dashboard." target="_blank" rel="noopener noreferrer" class="whatsapp-float" aria-label="WhatsApp Dr Aizat">
+        <span aria-hidden="true">💬</span>
+    </a>
+
+    <script src="js/utils.js" defer></script>
+    <script src="js/whatsapp.js" defer></script>
+    <script src="js/modal.js" defer></script>
+    <script src="js/payment.js" defer></script>
+    <script src="js/reviews.js" defer></script>
+    <script src="js/products.js" defer></script>
+    <script src="js/app.js" defer></script>
+</body>
+</html>

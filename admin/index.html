@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin | Data2Dashboard</title>
+    <meta name="robots" content="noindex, nofollow">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/admin.css">
+</head>
+<body class="admin-body">
+
+    <!-- ================= LOGIN SCREEN ================= -->
+    <div id="admin-login-view" class="admin-auth-screen">
+        <div class="admin-auth-card">
+            <img src="../images/logo.jpg" alt="Dr Excel logo" class="admin-auth-logo">
+            <h1>Data2Dashboard Admin</h1>
+            <p class="admin-auth-sub">Login khas untuk administrator Dr Excel.</p>
+
+            <p id="admin-backend-banner" class="admin-banner" hidden></p>
+
+            <form id="admin-login-form" class="standard-form">
+                <div class="form-group">
+                    <label for="admin-email">Email</label>
+                    <input type="email" id="admin-email" required placeholder="admin@drexcel.com" autocomplete="username">
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" required placeholder="••••••••" autocomplete="current-password">
+                </div>
+                <p id="admin-login-error" class="admin-error" hidden></p>
+                <button type="submit" class="btn btn-primary btn-full">Login</button>
+            </form>
+
+            <button type="button" id="admin-dev-preview-btn" class="btn btn-outline btn-full admin-dev-btn">Preview Admin UI (Dev Mode)</button>
+            <p class="admin-dev-note">Dev Mode memaparkan UI sahaja untuk tujuan pembangunan — bukan authentication sebenar. Ia akan dibuang apabila backend Google Apps Script disambungkan.</p>
+
+            <a href="../index.html" class="admin-back-link">← Kembali ke Data2Dashboard</a>
+        </div>
+    </div>
+
+    <!-- ================= ADMIN DASHBOARD ================= -->
+    <div id="admin-dashboard-view" class="admin-shell" hidden>
+        <aside class="admin-sidebar">
+            <div class="admin-sidebar-brand">
+                <img src="../images/logo.jpg" alt="Dr Excel logo">
+                <div>
+                    <strong>Data2Dashboard</strong>
+                    <span>Admin Panel</span>
+                </div>
+            </div>
+            <nav class="admin-nav">
+                <a href="#" class="admin-nav-link active">📦 Dashboard Collection</a>
+                <a href="#" class="admin-nav-link admin-nav-disabled" title="Coming soon">⭐ Reviews</a>
+                <a href="#" class="admin-nav-link admin-nav-disabled" title="Coming soon">🧾 Orders</a>
+                <a href="#" class="admin-nav-link admin-nav-disabled" title="Coming soon">⚙️ Website Settings</a>
+                <a href="#" class="admin-nav-link admin-nav-disabled" title="Coming soon">🔳 QR Payment</a>
+                <a href="#" class="admin-nav-link admin-nav-disabled" title="Coming soon">💬 WhatsApp</a>
+                <a href="#" class="admin-nav-link admin-nav-disabled" title="Coming soon">📊 Statistics</a>
+            </nav>
+            <button id="admin-logout-btn" class="btn btn-outline btn-full">Log Keluar</button>
+        </aside>
+
+        <main class="admin-main">
+            <p id="admin-connection-banner" class="admin-banner" hidden></p>
+
+            <div class="admin-main-header">
+                <div>
+                    <h1>Dashboard Collection</h1>
+                    <p id="admin-product-count" class="text-muted">Memuatkan...</p>
+                </div>
+                <button id="admin-add-product-btn" class="btn btn-primary">+ Add Dashboard</button>
+            </div>
+
+            <div class="admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Thumbnail</th>
+                            <th>Product ID</th>
+                            <th>Nama</th>
+                            <th>Category</th>
+                            <th>RM90</th>
+                            <th>RM180</th>
+                            <th>Badge</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-product-tbody"></tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- ================= ADD / EDIT DASHBOARD MODAL ================= -->
+    <dialog id="admin-product-modal" class="modal admin-product-modal">
+        <div class="modal-dialog">
+            <button class="modal-close" id="admin-modal-close" aria-label="Tutup">&times;</button>
+            <div class="admin-modal-body">
+                <h2 id="admin-modal-title">Add Dashboard</h2>
+                <form id="admin-product-form" class="standard-form">
+                    <input type="hidden" id="pf-product-id">
+
+                    <div class="admin-form-grid">
+                        <div class="form-group">
+                            <label for="pf-name">Nama Dashboard *</label>
+                            <input type="text" id="pf-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="pf-category">Category *</label>
+                            <input type="text" id="pf-category" required placeholder="cth: HSE">
+                        </div>
+                        <div class="form-group">
+                            <label for="pf-price-self">Harga Setup Sendiri (RM) *</label>
+                            <input type="number" id="pf-price-self" required min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="pf-price-full">Harga Setup Service (RM) *</label>
+                            <input type="number" id="pf-price-full" required min="0">
+                        </div>
+                        <div class="form-group">
+                            <label for="pf-badge">Badge</label>
+                            <select id="pf-badge">
+                                <option value="">Tiada</option>
+                                <option value="popular">Popular</option>
+                                <option value="bestseller">Best Seller</option>
+                                <option value="new">New</option>
+                                <option value="featured">Featured</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pf-status">Status</label>
+                            <select id="pf-status">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive (Deactivated)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="pf-demo-url">Demo URL</label>
+                            <input type="text" id="pf-demo-url" placeholder="Kosongkan jika belum ada demo">
+                        </div>
+                        <div class="form-group">
+                            <label for="pf-powerbi">
+                                <input type="checkbox" id="pf-powerbi"> Power BI Version Available
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pf-desc">Description *</label>
+                        <textarea id="pf-desc" rows="3" required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pf-features">Features (pisahkan dengan koma)</label>
+                        <textarea id="pf-features" rows="2"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="pf-technology">Technology (pisahkan dengan koma)</label>
+                        <textarea id="pf-technology" rows="2"></textarea>
+                    </div>
+
+                    <div class="admin-form-grid">
+                        <div class="form-group">
+                            <label for="pf-thumbnail-file">Thumbnail</label>
+                            <input type="file" id="pf-thumbnail-file" accept="image/*">
+                            <img id="pf-thumbnail-preview" class="admin-image-preview" alt="Thumbnail preview" hidden>
+                        </div>
+                        <div class="form-group">
+                            <label for="pf-preview-file">Preview Image</label>
+                            <input type="file" id="pf-preview-file" accept="image/*">
+                            <img id="pf-preview-preview" class="admin-image-preview" alt="Preview image preview" hidden>
+                        </div>
+                    </div>
+                    <p class="admin-upload-note">⚠️ Upload storage belum disambungkan. Imej dipratonton secara local sahaja buat masa ini dan tidak dihantar ke sebarang server sehingga backend storage (cth. Google Drive / Supabase Storage) disambungkan.</p>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-outline" id="admin-modal-cancel">Batal</button>
+                        <button type="submit" class="btn btn-primary">Simpan Dashboard</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </dialog>
+
+    <script src="../js/utils.js" defer></script>
+    <script src="../js/config.js" defer></script>
+    <script src="../js/products-data.js" defer></script>
+    <script src="../js/auth.js" defer></script>
+    <script src="../js/admin.js" defer></script>
+    <script defer>
+        document.addEventListener('DOMContentLoaded', () => D2D.admin.init());
+    </script>
+</body>
+</html>

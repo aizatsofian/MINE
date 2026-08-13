@@ -1,0 +1,117 @@
+/* Responsive breakpoints extracted from style.css. Loaded after style.css. */
+
+@media (max-width: 1300px) {
+.nav-links {
+display: none; /* Hidden by default on mobile, handled by JS later */
+position: absolute;
+top: 100%;
+left: 0;
+width: 100%;
+background-color: white;
+flex-direction: column;
+padding: 1.5rem;
+box-shadow: var(--shadow-md);
+border-bottom: 1px solid var(--border-color);
+}
+
+.nav-links.active {
+    display: flex;
+}
+
+.mobile-menu-toggle {
+    display: block;
+}
+
+.mobile-menu-toggle .hamburger-icon::before {
+    content: "\2630"; /* Hamburger unicode */
+}
+
+.header-actions {
+    display: none; /* Hide complex actions on mobile header */
+}
+
+
+}
+
+@media (max-width: 992px) {
+.hero-container {
+grid-template-columns: 1fr;
+text-align: center;
+}
+.hero-subtitle {
+margin: 0 auto 2rem;
+}
+.hero-buttons {
+justify-content: center;
+}
+.browser-mockup {
+transform: none;
+margin-top: 2rem;
+}
+}
+
+@media (max-width: 768px) {
+.steps-container {
+flex-direction: column;
+align-items: center;
+gap: 2rem;
+}
+.step-divider {
+transform: rotate(90deg);
+margin: -1rem 0;
+}
+}
+
+@media (max-width: 768px) {
+.comparison-grid {
+grid-template-columns: 1fr;
+}
+.comparison-vs {
+margin: 0 auto;
+}
+}
+
+@media (max-width: 576px) {
+.usecase-compare {
+grid-template-columns: 1fr;
+}
+}
+
+@media (max-width: 768px) {
+.footer-grid {
+grid-template-columns: 1fr;
+gap: 2rem;
+}
+.flex-between {
+flex-direction: column;
+text-align: center;
+}
+}
+
+@media (max-width: 576px) {
+.pricing-mini-grid {
+grid-template-columns: 1fr;
+}
+}
+
+@media (max-width: 576px) {
+.detail-buy-row {
+flex-direction: column;
+}
+}
+
+@media (max-width: 768px) {
+.modal-body-flow {
+padding: 1.5rem;
+}
+}
+
+@media (max-width: 576px) {
+.whatsapp-float {
+right: 1rem;
+bottom: 1rem;
+width: 50px;
+height: 50px;
+font-size: 1.4rem;
+}
+}

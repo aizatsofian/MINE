@@ -1,0 +1,310 @@
+/* Admin Panel — reuses tokens, buttons and form styles from style.css */
+
+/* .admin-auth-screen/.admin-shell set their own `display`, which would
+   otherwise tie with and beat the browser's default [hidden] rule. */
+[hidden] {
+display: none !important;
+}
+
+.admin-body {
+background-color: var(--bg-body);
+min-height: 100vh;
+}
+
+/* Banners */
+.admin-banner {
+background-color: rgba(245, 158, 11, 0.12);
+border: 1px solid var(--warning);
+color: #92600a;
+padding: 0.75rem 1rem;
+border-radius: var(--radius-sm);
+font-size: 0.85rem;
+margin-bottom: 1.5rem;
+}
+
+.admin-error {
+color: var(--danger);
+font-size: 0.85rem;
+}
+
+/* Login Screen */
+.admin-auth-screen {
+min-height: 100vh;
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 2rem 1.5rem;
+}
+
+.admin-auth-card {
+width: 100%;
+max-width: 420px;
+background-color: var(--bg-surface);
+border: 1px solid var(--border-color);
+border-radius: var(--radius-lg);
+box-shadow: var(--shadow-lg);
+padding: 2.5rem;
+text-align: center;
+}
+
+.admin-auth-logo {
+width: 56px;
+height: 56px;
+object-fit: contain;
+margin: 0 auto 1rem;
+}
+
+.admin-auth-card h1 {
+font-size: 1.4rem;
+margin-bottom: 0.4rem;
+}
+
+.admin-auth-sub {
+color: var(--text-muted);
+font-size: 0.9rem;
+margin-bottom: 1.5rem;
+}
+
+.admin-auth-card .standard-form {
+text-align: left;
+margin-bottom: 1.25rem;
+}
+
+.admin-dev-btn {
+margin-bottom: 0.5rem;
+}
+
+.admin-dev-note {
+font-size: 0.75rem;
+color: var(--text-muted);
+line-height: 1.4;
+margin-bottom: 1.5rem;
+}
+
+.admin-back-link {
+font-size: 0.85rem;
+color: var(--text-muted);
+}
+
+/* Dashboard Shell */
+.admin-shell {
+display: grid;
+grid-template-columns: 260px 1fr;
+min-height: 100vh;
+}
+
+.admin-sidebar {
+background-color: var(--bg-dark);
+color: white;
+padding: 1.5rem;
+display: flex;
+flex-direction: column;
+gap: 1.5rem;
+}
+
+.admin-sidebar-brand {
+display: flex;
+align-items: center;
+gap: 0.6rem;
+}
+
+.admin-sidebar-brand img {
+width: 36px;
+height: 36px;
+object-fit: contain;
+border-radius: var(--radius-sm);
+}
+
+.admin-sidebar-brand strong {
+display: block;
+font-size: 0.95rem;
+}
+
+.admin-sidebar-brand span {
+font-size: 0.75rem;
+color: #94a3b8;
+}
+
+.admin-nav {
+display: flex;
+flex-direction: column;
+gap: 0.25rem;
+flex: 1;
+}
+
+.admin-nav-link {
+padding: 0.6rem 0.75rem;
+border-radius: var(--radius-sm);
+color: #cbd5e1;
+font-size: 0.9rem;
+font-weight: 500;
+}
+
+.admin-nav-link:hover {
+background-color: rgba(255, 255, 255, 0.06);
+color: white;
+}
+
+.admin-nav-link.active {
+background-color: var(--primary);
+color: white;
+}
+
+.admin-nav-disabled {
+opacity: 0.45;
+cursor: not-allowed;
+pointer-events: none;
+}
+
+.admin-main {
+padding: 2rem 2.5rem;
+overflow-x: auto;
+}
+
+.admin-main-header {
+display: flex;
+justify-content: space-between;
+align-items: flex-start;
+flex-wrap: wrap;
+gap: 1rem;
+margin-bottom: 1.5rem;
+}
+
+.admin-main-header h1 {
+font-size: 1.6rem;
+margin-bottom: 0.25rem;
+}
+
+/* Table */
+.admin-table-wrap {
+background-color: var(--bg-surface);
+border: 1px solid var(--border-color);
+border-radius: var(--radius-md);
+overflow-x: auto;
+}
+
+.admin-table {
+width: 100%;
+border-collapse: collapse;
+font-size: 0.9rem;
+min-width: 800px;
+}
+
+.admin-table th,
+.admin-table td {
+padding: 0.85rem 1rem;
+text-align: left;
+border-bottom: 1px solid var(--border-color);
+white-space: nowrap;
+}
+
+.admin-table th {
+background-color: var(--bg-light);
+font-size: 0.8rem;
+text-transform: uppercase;
+letter-spacing: 0.3px;
+color: var(--text-muted);
+}
+
+.admin-thumb {
+width: 48px;
+height: 32px;
+object-fit: cover;
+border-radius: 4px;
+background-color: var(--bg-light);
+}
+
+.admin-row-inactive {
+opacity: 0.5;
+}
+
+.admin-status-pill {
+padding: 0.2rem 0.6rem;
+border-radius: var(--radius-full);
+font-size: 0.75rem;
+font-weight: 700;
+}
+
+.admin-status-active {
+background-color: rgba(16, 185, 129, 0.12);
+color: var(--success);
+}
+
+.admin-status-inactive {
+background-color: rgba(100, 116, 139, 0.15);
+color: var(--text-muted);
+}
+
+.admin-row-actions {
+display: flex;
+gap: 0.4rem;
+}
+
+.admin-delete-btn:hover {
+background-color: var(--danger);
+border-color: var(--danger);
+color: white;
+}
+
+/* Product Form Modal */
+.admin-product-modal {
+max-width: 720px;
+}
+
+.admin-modal-body {
+padding: 2.5rem;
+overflow-y: auto;
+max-height: 85vh;
+}
+
+.admin-modal-body h2 {
+margin-bottom: 1.5rem;
+}
+
+.admin-form-grid {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 1rem 1.5rem;
+}
+
+.admin-image-preview {
+margin-top: 0.5rem;
+width: 100%;
+max-height: 120px;
+object-fit: cover;
+border-radius: var(--radius-sm);
+border: 1px solid var(--border-color);
+}
+
+.admin-upload-note {
+font-size: 0.8rem;
+color: var(--text-muted);
+background-color: var(--bg-light);
+border-radius: var(--radius-sm);
+padding: 0.75rem;
+margin: 0.5rem 0 1.5rem;
+}
+
+@media (max-width: 900px) {
+.admin-shell {
+grid-template-columns: 1fr;
+}
+.admin-sidebar {
+flex-direction: row;
+align-items: center;
+flex-wrap: wrap;
+}
+.admin-nav {
+flex-direction: row;
+flex-wrap: wrap;
+}
+}
+
+@media (max-width: 576px) {
+.admin-form-grid {
+grid-template-columns: 1fr;
+}
+.admin-main {
+padding: 1.5rem;
+}
+}
