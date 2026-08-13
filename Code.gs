@@ -13,19 +13,25 @@
  *      SETTINGS reads and writes.
  *
  * ── Deploy ────────────────────────────────────────────────────────────
- *   1. Go to https://script.google.com/ → New project.
- *   2. Paste this whole file in as Code.gs (replace the default content).
- *   3. Run > setupSheets (first run will ask you to authorize access to
- *      your Google Sheets — this creates a brand-new Spreadsheet the
- *      first time it runs, and logs its URL).
- *   4. Fill in SETUP_ADMIN_EMAIL / SETUP_ADMIN_PASSWORD below, then
+ *   1. Create a Google Sheet (any blank Sheet), copy its ID from the URL:
+ *      docs.google.com/spreadsheets/d/THIS_PART_IS_THE_ID/edit
+ *   2. Go to https://script.google.com/ → New project.
+ *   3. Paste this whole file in as Code.gs (replace the default content),
+ *      then fill in SPREADSHEET_ID below with the ID from step 1.
+ *      (SpreadsheetApp.getActiveSpreadsheet() is NOT used on purpose — it
+ *      resolves to null for a standalone script's Web App requests, so
+ *      every sheet access goes through openById(SPREADSHEET_ID) instead.)
+ *   4. Run > setupSheets (first run will ask you to authorize access to
+ *      your Google Sheets — this creates the 5 tabs in that Sheet and
+ *      seeds PRODUCTS).
+ *   5. Fill in SETUP_ADMIN_EMAIL / SETUP_ADMIN_PASSWORD below, then
  *      Run > createInitialAdmin. Check the Execution Log for
  *      confirmation, then delete the password (line below) and re-save.
- *   5. Deploy > New deployment > type: Web app.
+ *   6. Deploy > New deployment > type: Web app.
  *        Execute as: Me
  *        Who has access: Anyone
  *      Click Deploy, copy the Web app URL.
- *   6. Paste that URL into js/config.js as D2D.backendConfig.GAS_WEB_APP_URL.
+ *   7. Paste that URL into js/config.js as D2D.backendConfig.GAS_WEB_APP_URL.
  *
  * ── Redeploying after edits ──────────────────────────────────────────
  * Apps Script Web App URLs don't change on their own, but editing this
@@ -39,6 +45,14 @@
  * It only rewrites the thumbnail cell for the original DB001-DB015 rows
  * that still point at the dead host — nothing else is touched.
  */
+
+// ── Spreadsheet binding ─────────────────────────────────────────────
+// Fill in with your Sheet's ID (from its URL, see the Deploy steps
+// above). Every handler opens the Sheet through this explicit ID rather
+// than SpreadsheetApp.getActiveSpreadsheet(), which is unreliable for a
+// standalone script's Web App requests — it isn't running "inside" any
+// Sheet, so there's no ambient "active" one for it to resolve to.
+const SPREADSHEET_ID = '';
 
 // ── One-time admin bootstrap ──────────────────────────────────────────
 // Fill these in, run createInitialAdmin() once from the function
@@ -80,7 +94,10 @@ const SESSION_TTL_SECONDS = 21600; // 6 hours — CacheService's own max
 // ============================================================
 
 function setupSheets() {
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    if (!SPREADSHEET_ID) {
+        throw new Error('Isi SPREADSHEET_ID dahulu (lihat arahan Deploy di atas fail ini), kemudian jalankan semula.');
+    }
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
 
     createSheetWithHeaders_(ss, SHEET_NAMES.PRODUCTS, PRODUCTS_HEADERS);
     createSheetWithHeaders_(ss, SHEET_NAMES.REVIEWS, REVIEWS_HEADERS);
@@ -168,7 +185,7 @@ function seedProductsData_() {
 // and only when the cell still points at the dead placeholder host; any
 // dashboard added or edited since then (with a real thumbnail) is left alone.
 function fixLegacyPlaceholderThumbnails() {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.PRODUCTS);
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAMES.PRODUCTS);
     const rows = sheet.getDataRange().getValues();
     const headers = rows[0];
     const idCol = headers.indexOf('product_id');
@@ -196,7 +213,7 @@ function createInitialAdmin() {
         throw new Error('Isi SETUP_ADMIN_EMAIL dan SETUP_ADMIN_PASSWORD dahulu, kemudian jalankan semula.');
     }
 
-    const ss = SpreadsheetApp.getActiveSpreadsheet();
+    const ss = SpreadsheetApp.openById(SPREADSHEET_ID);
     const sheet = ss.getSheetByName(SHEET_NAMES.ADMIN_USERS) || createSheetWithHeaders_(ss, SHEET_NAMES.ADMIN_USERS, ADMIN_USERS_HEADERS);
 
     const email = SETUP_ADMIN_EMAIL.trim().toLowerCase();
@@ -286,7 +303,7 @@ function handleLogin_(body) {
 }
 
 function updateAdminLastLogin_(email) {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.ADMIN_USERS);
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAMES.ADMIN_USERS);
     const rows = sheet.getDataRange().getValues();
     const headers = rows[0];
     const emailCol = headers.indexOf('email');
@@ -325,7 +342,7 @@ function hashPassword_(password, salt) {
 // ============================================================
 
 function sheetToObjects_(name) {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(name);
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(name);
     const rows = sheet.getDataRange().getValues();
     const headers = rows[0];
     return rows.slice(1).map(row => rowToObject_(headers, row));
@@ -346,7 +363,7 @@ function handleListProducts_() {
 }
 
 function handleSaveProduct_(body) {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.PRODUCTS);
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAMES.PRODUCTS);
     const rows = sheet.getDataRange().getValues();
     const headers = rows[0];
     const idCol = headers.indexOf('product_id');
@@ -378,7 +395,7 @@ function handleSaveProduct_(body) {
 }
 
 function handleDeleteProduct_(body) {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.PRODUCTS);
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAMES.PRODUCTS);
     const rows = sheet.getDataRange().getValues();
     const idCol = rows[0].indexOf('product_id');
 
@@ -411,7 +428,7 @@ function handleListReviews_(body) {
 // Public: anyone can submit a review. It always lands as Pending —
 // only setReviewStatus_ (admin, authenticated) can approve it.
 function handleSubmitReview_(body) {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.REVIEWS);
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAMES.REVIEWS);
     const review = body.review || {};
     const review_id = 'RV' + new Date().getTime();
     sheet.appendRow([
@@ -422,7 +439,7 @@ function handleSubmitReview_(body) {
 }
 
 function handleSetReviewStatus_(body) {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.REVIEWS);
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAMES.REVIEWS);
     const rows = sheet.getDataRange().getValues();
     const headers = rows[0];
     const idCol = headers.indexOf('review_id');
@@ -448,7 +465,7 @@ function handleListOrders_(body) {
 // Public: the payment modal can log an order attempt before WhatsApp
 // hand-off. payment_status starts Pending until Dr Excel verifies it.
 function handleSubmitOrder_(body) {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.ORDERS);
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAMES.ORDERS);
     const order = body.order || {};
     const order_id = 'ORD' + new Date().getTime();
     sheet.appendRow([
@@ -472,7 +489,7 @@ function handleGetSettings_() {
 }
 
 function handleSaveSetting_(body) {
-    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.SETTINGS);
+    const sheet = SpreadsheetApp.openById(SPREADSHEET_ID).getSheetByName(SHEET_NAMES.SETTINGS);
     const rows = sheet.getDataRange().getValues();
     const headers = rows[0];
     const keyCol = headers.indexOf('setting');
