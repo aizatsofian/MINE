@@ -667,6 +667,13 @@ grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
 gap: 2rem;
 }
 
+/* Dashboard Collection marketplace grid (#dashboard-grid specifically, not
+   the Popular/Latest mini-grids which share .dashboard-grid) — mobile-first
+   column count, overridden per breakpoint in responsive.css. */
+#dashboard-grid {
+grid-template-columns: 1fr;
+}
+
 .mini-grid {
 grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
 }
