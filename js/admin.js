@@ -12,6 +12,8 @@ D2D.admin = (() => {
     let pendingThumbnail = '';
     let pendingPreview = '';
 
+    const isRemote = () => D2D.auth.isBackendConnected();
+
     // ---------- Data ----------
 
     const loadProducts = () => {
@@ -24,6 +26,43 @@ D2D.admin = (() => {
 
     const saveProducts = () => {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
+    };
+
+    // When a backend is connected, PRODUCTS lives in the Google Sheet —
+    // every mutation calls Code.gs directly and the table is re-fetched
+    // afterwards rather than kept in sync by hand.
+    const setBanner = (message) => {
+        const el = document.getElementById('admin-connection-banner');
+        if (!el) return;
+        if (message) { el.hidden = false; el.textContent = message; }
+        else { el.hidden = true; }
+    };
+
+    const refreshProducts = async () => {
+        if (!isRemote()) {
+            products = loadProducts();
+            renderTable();
+            return;
+        }
+        const countEl = document.getElementById('admin-product-count');
+        if (countEl) countEl.textContent = 'Memuatkan...';
+        try {
+            const data = await D2D.auth.call('listProducts', {}, false);
+            if (!data || !data.ok) throw new Error((data && data.message) || 'Gagal memuatkan senarai dashboard.');
+            products = data.products || [];
+            setBanner('');
+        } catch (err) {
+            products = [];
+            setBanner('⚠️ ' + err.message);
+        }
+        renderTable();
+    };
+
+    // Logs back out to the login screen if the server says the session
+    // expired (D2D.auth.call already clears the stale token for this).
+    const handleApiError = (err) => {
+        alert(err.message);
+        if (!D2D.auth.isLoggedIn()) window.location.reload();
     };
 
     const nextProductId = () => {
@@ -67,7 +106,11 @@ D2D.admin = (() => {
             tbody.appendChild(tr);
         });
 
-        if (countEl) countEl.textContent = `${products.length} dashboard dalam koleksi (tersimpan secara local dalam pelayar ini)`;
+        if (countEl) {
+            countEl.textContent = isRemote()
+                ? `${products.length} dashboard dalam koleksi (Google Sheet)`
+                : `${products.length} dashboard dalam koleksi (tersimpan secara local dalam pelayar ini)`;
+        }
     };
 
     // ---------- Form modal ----------
@@ -130,7 +173,7 @@ D2D.admin = (() => {
         });
     };
 
-    const handleFormSubmit = (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
 
         const id = document.getElementById('pf-product-id').value;
@@ -157,6 +200,30 @@ D2D.admin = (() => {
             purchase_count: isEdit ? undefined : 0
         };
 
+        if (isRemote()) {
+            const payload = { ...data };
+            if (!isEdit) delete payload.product_id; // let Code.gs assign the next DBxxx id
+            // Upload storage isn't connected yet (see admin-upload-note in the
+            // form) — a locally-previewed image is a data: URI, not a real
+            // URL, so it must never be written into the Sheet as one.
+            if (typeof payload.thumbnail === 'string' && payload.thumbnail.startsWith('data:')) delete payload.thumbnail;
+            if (typeof payload.preview_image === 'string' && payload.preview_image.startsWith('data:')) delete payload.preview_image;
+
+            const submitBtn = document.querySelector('#admin-product-form button[type="submit"]');
+            if (submitBtn) submitBtn.disabled = true;
+            try {
+                const result = await D2D.auth.call('saveProduct', { product: payload }, true);
+                if (!result || !result.ok) throw new Error((result && result.message) || 'Gagal menyimpan dashboard.');
+                modal().close();
+                await refreshProducts();
+            } catch (err) {
+                handleApiError(err);
+            } finally {
+                if (submitBtn) submitBtn.disabled = false;
+            }
+            return;
+        }
+
         if (isEdit) {
             const idx = products.findIndex(p => p.product_id === id);
             products[idx] = { ...products[idx], ...data };
@@ -169,26 +236,59 @@ D2D.admin = (() => {
         modal().close();
     };
 
-    const handleTableClick = (e) => {
+    const handleTableClick = async (e) => {
         const editId = e.target.dataset.edit;
         const toggleId = e.target.dataset.toggle;
         const deleteId = e.target.dataset.delete;
 
         if (editId) {
             openForm(products.find(p => p.product_id === editId));
+            return;
         }
+
         if (toggleId) {
             const p = products.find(p => p.product_id === toggleId);
-            p.status = p.status === 'active' ? 'inactive' : 'active';
+            const newStatus = p.status === 'active' ? 'inactive' : 'active';
+
+            if (isRemote()) {
+                e.target.disabled = true;
+                try {
+                    const result = await D2D.auth.call('saveProduct', { product: { product_id: toggleId, status: newStatus } }, true);
+                    if (!result || !result.ok) throw new Error((result && result.message) || 'Gagal mengemaskini status.');
+                    await refreshProducts();
+                } catch (err) {
+                    handleApiError(err);
+                    e.target.disabled = false;
+                }
+                return;
+            }
+
+            p.status = newStatus;
             saveProducts();
             renderTable();
+            return;
         }
+
         if (deleteId) {
-            if (confirm('Padam dashboard ini daripada koleksi local? Tindakan ini tidak boleh dibatalkan.')) {
-                products = products.filter(p => p.product_id !== deleteId);
-                saveProducts();
-                renderTable();
+            const confirmMsg = isRemote()
+                ? 'Padam dashboard ini daripada Google Sheet? Tindakan ini tidak boleh dibatalkan.'
+                : 'Padam dashboard ini daripada koleksi local? Tindakan ini tidak boleh dibatalkan.';
+            if (!confirm(confirmMsg)) return;
+
+            if (isRemote()) {
+                try {
+                    const result = await D2D.auth.call('deleteProduct', { product_id: deleteId }, true);
+                    if (!result || !result.ok) throw new Error((result && result.message) || 'Gagal memadam dashboard.');
+                    await refreshProducts();
+                } catch (err) {
+                    handleApiError(err);
+                }
+                return;
             }
+
+            products = products.filter(p => p.product_id !== deleteId);
+            saveProducts();
+            renderTable();
         }
     };
 
@@ -209,10 +309,11 @@ D2D.admin = (() => {
         const dash = document.getElementById('admin-dashboard-view');
         dash.hidden = false;
 
-        showBackendBanner(document.getElementById('admin-connection-banner'));
+        if (!isRemote()) {
+            showBackendBanner(document.getElementById('admin-connection-banner'));
+        }
 
-        products = loadProducts();
-        renderTable();
+        refreshProducts();
     };
 
     const initLoginForm = () => {

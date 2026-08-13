@@ -12,6 +12,16 @@ D2D.auth = (() => {
     const isLoggedIn = () => Boolean(getToken());
     const isBackendConnected = () => D2D.backendConfig.isConnected();
 
+    // Content-Type is deliberately text/plain, not application/json:
+    // Apps Script Web Apps can't answer a CORS preflight (OPTIONS)
+    // request, so a "simple" request is required to avoid one being
+    // triggered. Code.gs parses the body as JSON regardless.
+    const post = (body) => fetch(D2D.backendConfig.GAS_WEB_APP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(body)
+    }).then(res => res.json());
+
     // Returns { ok, message }. Never fakes success — if the backend isn't
     // configured yet, it says so instead of letting anyone "log in".
     const login = async (email, password) => {
@@ -23,17 +33,7 @@ D2D.auth = (() => {
         }
 
         try {
-            // Content-Type is deliberately text/plain, not application/json:
-            // Apps Script Web Apps can't answer a CORS preflight (OPTIONS)
-            // request, so a "simple" request is required to avoid one being
-            // triggered. Code.gs parses the body as JSON regardless.
-            const res = await fetch(D2D.backendConfig.GAS_WEB_APP_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ action: 'login', email, password })
-            });
-            const data = await res.json();
-
+            const data = await post({ action: 'login', email, password });
             if (data && data.ok && data.token) {
                 setToken(data.token);
                 return { ok: true };
@@ -49,5 +49,19 @@ D2D.auth = (() => {
         window.location.reload();
     };
 
-    return { login, logout, isLoggedIn, isBackendConnected, getToken };
+    // Generic authenticated call to a Code.gs action (listProducts, saveProduct,
+    // deleteProduct, etc). Attaches the session token automatically and clears
+    // it if the server reports the session expired, so the next page load
+    // returns to the login screen instead of looping on stale-token errors.
+    const call = async (action, payload = {}, requireAuth = true) => {
+        const body = Object.assign({ action }, payload);
+        if (requireAuth) body.token = getToken();
+        const data = await post(body);
+        if (requireAuth && data && data.ok === false && /Sesi tamat/.test(data.message || '')) {
+            clearToken();
+        }
+        return data;
+    };
+
+    return { login, logout, isLoggedIn, isBackendConnected, getToken, call };
 })();

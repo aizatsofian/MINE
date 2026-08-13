@@ -31,6 +31,13 @@
  * Apps Script Web App URLs don't change on their own, but editing this
  * file does NOT update a live deployment — use Deploy > Manage
  * deployments > ✎ Edit > Version: New version > Deploy.
+ *
+ * ── One-time repair: dead placeholder thumbnails ──────────────────────
+ * If your Sheet was set up before this file switched its seed thumbnails
+ * from via.placeholder.com (now offline) to inline SVGs, paste the
+ * updated file in, save, then Run > fixLegacyPlaceholderThumbnails once.
+ * It only rewrites the thumbnail cell for the original DB001-DB015 rows
+ * that still point at the dead host — nothing else is touched.
  */
 
 // ── One-time admin bootstrap ──────────────────────────────────────────
@@ -151,6 +158,36 @@ function seedProductsData_() {
         ["DB014", "Training Dashboard", "Education", "Rekod latihan staf, jam kursus, sijil tamat dan analisis bajet latihan tahunan.", 90, 180, "", true, "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27400%27%20height%3D%27250%27%20viewBox%3D%270%200%20400%20250%27%3E%3Crect%20width%3D%27400%27%20height%3D%27250%27%20fill%3D%27%230392cf%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-size%3D%2723%27%20fill%3D%27%23ffffff%27%20text-anchor%3D%27middle%27%20dominant-baseline%3D%27middle%27%3ETraining%20Dashboard%3C%2Ftext%3E%3C%2Fsvg%3E", "", "Responsive dashboard, KPI cards, Interactive charts, Filter / slicer, Search functionality, Data table, CRUD compatible, Mobile friendly", "HTML5, CSS3, JavaScript, Microsoft Excel, Microsoft Power BI, Google Apps Script, Google Sheet", 4.8, 19, "600", 0, "", "active", '', ''],
         ["DB015", "Asset Management Dashboard", "Operations", "Sistem inventori aset syarikat, susut nilai, lokasi aset dan rekod penyelenggaraan.", 90, 180, "", true, "data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%27%20width%3D%27400%27%20height%3D%27250%27%20viewBox%3D%270%200%20400%20250%27%3E%3Crect%20width%3D%27400%27%20height%3D%27250%27%20fill%3D%27%237bc043%27%2F%3E%3Ctext%20x%3D%2750%25%27%20y%3D%2750%25%27%20font-family%3D%27Arial%2C%20Helvetica%2C%20sans-serif%27%20font-size%3D%2723%27%20fill%3D%27%23ffffff%27%20text-anchor%3D%27middle%27%20dominant-baseline%3D%27middle%27%3EAsset%20Dashboard%3C%2Ftext%3E%3C%2Fsvg%3E", "", "Responsive dashboard, KPI cards, Interactive charts, Filter / slicer, Search functionality, Data table, CRUD compatible, Mobile friendly", "HTML5, CSS3, JavaScript, Microsoft Excel, Microsoft Power BI, Google Apps Script, Google Sheet", 4.9, 41, "1,150", 0, "popular", "active", '', '']
     ];
+}
+
+// One-time repair for sheets that were seeded before via.placeholder.com
+// (used for the original thumbnail URLs) went offline. seedProductsIfEmpty_
+// only ever writes to an empty sheet, so it can't fix rows that already
+// exist — run this once from the Apps Script editor instead. It only
+// touches the thumbnail column, only for the original DB001-DB015 rows,
+// and only when the cell still points at the dead placeholder host; any
+// dashboard added or edited since then (with a real thumbnail) is left alone.
+function fixLegacyPlaceholderThumbnails() {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName(SHEET_NAMES.PRODUCTS);
+    const rows = sheet.getDataRange().getValues();
+    const headers = rows[0];
+    const idCol = headers.indexOf('product_id');
+    const thumbCol = headers.indexOf('thumbnail');
+
+    const freshThumbnails = {};
+    seedProductsData_().forEach(row => { freshThumbnails[row[0]] = row[8]; });
+
+    let fixed = 0;
+    for (let i = 1; i < rows.length; i++) {
+        const id = rows[i][idCol];
+        const currentThumb = String(rows[i][thumbCol] || '');
+        if (freshThumbnails[id] && currentThumb.indexOf('via.placeholder.com') !== -1) {
+            sheet.getRange(i + 1, thumbCol + 1).setValue(freshThumbnails[id]);
+            fixed++;
+        }
+    }
+
+    Logger.log('Fixed ' + fixed + ' legacy placeholder thumbnail(s).');
 }
 
 // Run this once (see the deploy instructions at the top of this file).
