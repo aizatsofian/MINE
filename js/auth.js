@@ -16,11 +16,50 @@ D2D.auth = (() => {
     // Apps Script Web Apps can't answer a CORS preflight (OPTIONS)
     // request, so a "simple" request is required to avoid one being
     // triggered. Code.gs parses the body as JSON regardless.
-    const post = (body) => fetch(D2D.backendConfig.GAS_WEB_APP_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-        body: JSON.stringify(body)
-    }).then(res => res.json());
+    //
+    // Apps Script delivers a Web App's response via a redirect to a
+    // separate googleusercontent.com "echo" URL, and that hop is flaky:
+    // the same request can non-deterministically come back as a clean
+    // JSON response, an HTML error page, or (if the browser silently
+    // downgrades the POST to a GET while following the redirect) doGet's
+    // health-check payload instead of the action that was actually asked
+    // for. None of this is under this code's control, so it's handled
+    // here with a few silent retries rather than surfacing a raw parse
+    // error or wrong-handler response to the caller.
+    const HEALTH_CHECK_MESSAGE = 'Data2Dashboard API is running.';
+    const MAX_ATTEMPTS = 4;
+
+    const post = async (body, attempt = 1) => {
+        let text;
+        try {
+            const res = await fetch(D2D.backendConfig.GAS_WEB_APP_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify(body)
+            });
+            text = await res.text();
+        } catch (err) {
+            if (attempt < MAX_ATTEMPTS) return post(body, attempt + 1);
+            throw new Error('Tidak dapat menghubungi server. Sila cuba lagi.');
+        }
+
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (err) {
+            if (attempt < MAX_ATTEMPTS) return post(body, attempt + 1);
+            throw new Error('Google Apps Script tidak stabil buat masa ini. Sila cuba lagi sebentar.');
+        }
+
+        // The action we asked for never returns this exact message — only
+        // doGet's health check does, so seeing it here means the POST got
+        // downgraded to a GET somewhere along the redirect.
+        if (data && data.message === HEALTH_CHECK_MESSAGE && attempt < MAX_ATTEMPTS) {
+            return post(body, attempt + 1);
+        }
+
+        return data;
+    };
 
     // Returns { ok, message }. Never fakes success — if the backend isn't
     // configured yet, it says so instead of letting anyone "log in".
@@ -40,7 +79,7 @@ D2D.auth = (() => {
             }
             return { ok: false, message: (data && data.message) || 'Email atau password tidak sah.' };
         } catch (err) {
-            return { ok: false, message: 'Tidak dapat menghubungi server. Sila cuba lagi.' };
+            return { ok: false, message: err.message || 'Tidak dapat menghubungi server. Sila cuba lagi.' };
         }
     };
 
