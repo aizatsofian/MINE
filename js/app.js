@@ -75,4 +75,11 @@ document.addEventListener('DOMContentLoaded', () => {
     D2D.payment.init();
     D2D.reviews.init();
     D2D.products.init();
+
+    // Modal close (×) buttons only carry formmethod="dialog", which does
+    // nothing outside a <form> — wire them to actually close their dialog.
+    document.querySelectorAll('.modal-close').forEach(btn => {
+        const dialog = btn.closest('dialog');
+        if (dialog) btn.addEventListener('click', () => dialog.close());
+    });
 });
