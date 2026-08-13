@@ -1,36 +1,21 @@
 window.D2D = window.D2D || {};
 
-// Admin panel: login gate + Dashboard Collection management (Add/Edit/Delete).
-//
-// Data is held in localStorage (seeded from D2D.PRODUCTS_SEED) until the
-// Google Apps Script backend from js/config.js is connected. This is real,
-// working persistence scoped to this browser — it is not presented as a
-// shared production database, and the UI says so.
+// Admin panel: login gate + Dashboard Collection management (Add/Edit/
+// Delete), backed by Supabase (data2dashboard schema). RLS on the products
+// table enforces that only an authenticated admin can write — this file
+// never manages tokens itself; supabase-js attaches the session
+// automatically to every request once signed in via D2D.auth.login().
 D2D.admin = (() => {
-    const STORAGE_KEY = 'd2d_admin_products';
     let products = [];
-    let pendingThumbnail = '';
-    let pendingPreview = '';
+    let pendingThumbnailFile = null;
+    let pendingPreviewFile = null;
+    let pendingThumbnailUrl = '';
+    let pendingPreviewUrl = '';
 
-    const isRemote = () => D2D.auth.isBackendConnected();
+    const db = () => D2D.supabase;
 
     // ---------- Data ----------
 
-    const loadProducts = () => {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) {
-            try { return JSON.parse(raw); } catch (err) { /* fall through to seed */ }
-        }
-        return JSON.parse(JSON.stringify(D2D.PRODUCTS_SEED));
-    };
-
-    const saveProducts = () => {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(products));
-    };
-
-    // When a backend is connected, PRODUCTS lives in the Google Sheet —
-    // every mutation calls Code.gs directly and the table is re-fetched
-    // afterwards rather than kept in sync by hand.
     const setBanner = (message) => {
         const el = document.getElementById('admin-connection-banner');
         if (!el) return;
@@ -39,38 +24,17 @@ D2D.admin = (() => {
     };
 
     const refreshProducts = async () => {
-        if (!isRemote()) {
-            products = loadProducts();
-            renderTable();
-            return;
-        }
         const countEl = document.getElementById('admin-product-count');
         if (countEl) countEl.textContent = 'Memuatkan...';
-        try {
-            const data = await D2D.auth.call('listProducts', {}, false);
-            if (!data || !data.ok) throw new Error((data && data.message) || 'Gagal memuatkan senarai dashboard.');
-            products = data.products || [];
-            setBanner('');
-        } catch (err) {
+        const { data, error } = await db().from('products').select('*').order('id', { ascending: true });
+        if (error) {
             products = [];
-            setBanner('⚠️ ' + err.message);
+            setBanner('⚠️ Gagal memuatkan senarai dashboard: ' + error.message);
+        } else {
+            products = data;
+            setBanner('');
         }
         renderTable();
-    };
-
-    // Logs back out to the login screen if the server says the session
-    // expired (D2D.auth.call already clears the stale token for this).
-    const handleApiError = (err) => {
-        alert(err.message);
-        if (!D2D.auth.isLoggedIn()) window.location.reload();
-    };
-
-    const nextProductId = () => {
-        const nums = products
-            .map(p => parseInt(String(p.product_id).replace(/\D/g, ''), 10))
-            .filter(n => !isNaN(n));
-        const next = (nums.length ? Math.max(...nums) : 0) + 1;
-        return 'DB' + String(next).padStart(3, '0');
     };
 
     // ---------- Rendering ----------
@@ -89,8 +53,8 @@ D2D.admin = (() => {
             const tr = document.createElement('tr');
             if (p.status !== 'active') tr.classList.add('admin-row-inactive');
             tr.innerHTML = `
-                <td><img src="${p.thumbnail || ''}" alt="" class="admin-thumb"></td>
-                <td>${p.product_id}</td>
+                <td><img src="${p.thumbnail_url || ''}" alt="" class="admin-thumb"></td>
+                <td>${p.id}</td>
                 <td>${p.product_name}</td>
                 <td>${p.category}</td>
                 <td>RM${p.price_self_setup}</td>
@@ -98,19 +62,15 @@ D2D.admin = (() => {
                 <td>${badgeLabel(p.badge)}</td>
                 <td><span class="admin-status-pill admin-status-${p.status}">${p.status === 'active' ? 'Active' : 'Inactive'}</span></td>
                 <td class="admin-row-actions">
-                    <button type="button" class="btn btn-sm btn-outline" data-edit="${p.product_id}">Edit</button>
-                    <button type="button" class="btn btn-sm btn-outline" data-toggle="${p.product_id}">${p.status === 'active' ? 'Deactivate' : 'Activate'}</button>
-                    <button type="button" class="btn btn-sm btn-outline admin-delete-btn" data-delete="${p.product_id}">Delete</button>
+                    <button type="button" class="btn btn-sm btn-outline" data-edit="${p.id}">Edit</button>
+                    <button type="button" class="btn btn-sm btn-outline" data-toggle="${p.id}">${p.status === 'active' ? 'Deactivate' : 'Activate'}</button>
+                    <button type="button" class="btn btn-sm btn-outline admin-delete-btn" data-delete="${p.id}">Delete</button>
                 </td>
             `;
             tbody.appendChild(tr);
         });
 
-        if (countEl) {
-            countEl.textContent = isRemote()
-                ? `${products.length} dashboard dalam koleksi (Google Sheet)`
-                : `${products.length} dashboard dalam koleksi (tersimpan secara local dalam pelayar ini)`;
-        }
+        if (countEl) countEl.textContent = `${products.length} dashboard dalam koleksi (Supabase)`;
     };
 
     // ---------- Form modal ----------
@@ -118,8 +78,10 @@ D2D.admin = (() => {
     const modal = () => document.getElementById('admin-product-modal');
 
     const resetImagePreviews = () => {
-        pendingThumbnail = '';
-        pendingPreview = '';
+        pendingThumbnailFile = null;
+        pendingPreviewFile = null;
+        pendingThumbnailUrl = '';
+        pendingPreviewUrl = '';
         const tp = document.getElementById('pf-thumbnail-preview');
         const pp = document.getElementById('pf-preview-preview');
         if (tp) { tp.hidden = true; tp.src = ''; }
@@ -131,7 +93,7 @@ D2D.admin = (() => {
     const openForm = (product) => {
         const isEdit = Boolean(product);
         document.getElementById('admin-modal-title').textContent = isEdit ? 'Edit Dashboard' : 'Add Dashboard';
-        document.getElementById('pf-product-id').value = isEdit ? product.product_id : '';
+        document.getElementById('pf-product-id').value = isEdit ? product.id : '';
         document.getElementById('pf-name').value = isEdit ? product.product_name : '';
         document.getElementById('pf-category').value = isEdit ? product.category : '';
         document.getElementById('pf-price-self').value = isEdit ? product.price_self_setup : 90;
@@ -145,95 +107,89 @@ D2D.admin = (() => {
         document.getElementById('pf-technology').value = isEdit ? product.technology : '';
 
         resetImagePreviews();
-        pendingThumbnail = isEdit ? (product.thumbnail || '') : '';
-        pendingPreview = isEdit ? (product.preview_image || '') : '';
-        if (pendingThumbnail) {
+        pendingThumbnailUrl = isEdit ? (product.thumbnail_url || '') : '';
+        pendingPreviewUrl = isEdit ? (product.preview_image_url || '') : '';
+        if (pendingThumbnailUrl) {
             const tp = document.getElementById('pf-thumbnail-preview');
-            tp.src = pendingThumbnail; tp.hidden = false;
+            tp.src = pendingThumbnailUrl; tp.hidden = false;
         }
-        if (pendingPreview) {
+        if (pendingPreviewUrl) {
             const pp = document.getElementById('pf-preview-preview');
-            pp.src = pendingPreview; pp.hidden = false;
+            pp.src = pendingPreviewUrl; pp.hidden = false;
         }
 
         modal().showModal();
     };
 
-    const previewImageFile = (input, imgEl, onLoaded) => {
+    const previewImageFile = (input, imgEl, onSelected) => {
         input.addEventListener('change', () => {
             const file = input.files && input.files[0];
             if (!file) return;
+            onSelected(file);
             const reader = new FileReader();
             reader.onload = (e) => {
                 imgEl.src = e.target.result;
                 imgEl.hidden = false;
-                onLoaded(e.target.result);
             };
             reader.readAsDataURL(file);
         });
     };
 
+    // Uploads to the product-images Storage bucket (public read, admin-only
+    // write per its RLS policy) and returns the public URL to store on the
+    // product row. Returns the existing URL unchanged if no new file was
+    // picked, so saving other fields doesn't clear an already-uploaded image.
+    const uploadImageIfNeeded = async (file, existingUrl, prefix) => {
+        if (!file) return existingUrl;
+        const ext = (file.name.split('.').pop() || 'jpg').toLowerCase();
+        const path = `${prefix}-${Date.now()}-${Math.random().toString(36).slice(2, 8)}.${ext}`;
+        const { error } = await db().storage.from('product-images').upload(path, file, { upsert: false });
+        if (error) throw new Error('Gagal upload imej: ' + error.message);
+        const { data } = db().storage.from('product-images').getPublicUrl(path);
+        return data.publicUrl;
+    };
+
     const handleFormSubmit = async (e) => {
         e.preventDefault();
+        const submitBtn = document.querySelector('#admin-product-form button[type="submit"]');
 
         const id = document.getElementById('pf-product-id').value;
         const isEdit = Boolean(id);
 
-        const data = {
-            product_id: isEdit ? id : nextProductId(),
-            product_name: document.getElementById('pf-name').value.trim(),
-            category: document.getElementById('pf-category').value.trim(),
-            price_self_setup: Number(document.getElementById('pf-price-self').value) || 0,
-            price_full_setup: Number(document.getElementById('pf-price-full').value) || 0,
-            badge: document.getElementById('pf-badge').value,
-            status: document.getElementById('pf-status').value,
-            demo_url: document.getElementById('pf-demo-url').value.trim(),
-            powerbi_available: document.getElementById('pf-powerbi').checked,
-            description: document.getElementById('pf-desc').value.trim(),
-            features: document.getElementById('pf-features').value.trim(),
-            technology: document.getElementById('pf-technology').value.trim(),
-            thumbnail: pendingThumbnail,
-            preview_image: pendingPreview,
-            rating: isEdit ? undefined : 0,
-            review_count: isEdit ? undefined : 0,
-            demo_views: isEdit ? undefined : '0',
-            purchase_count: isEdit ? undefined : 0
-        };
+        if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = 'Menyimpan...'; }
+        try {
+            const thumbnailUrl = await uploadImageIfNeeded(pendingThumbnailFile, pendingThumbnailUrl, 'thumb');
+            const previewUrl = await uploadImageIfNeeded(pendingPreviewFile, pendingPreviewUrl, 'preview');
 
-        if (isRemote()) {
-            const payload = { ...data };
-            if (!isEdit) delete payload.product_id; // let Code.gs assign the next DBxxx id
-            // Upload storage isn't connected yet (see admin-upload-note in the
-            // form) — a locally-previewed image is a data: URI, not a real
-            // URL, so it must never be written into the Sheet as one.
-            if (typeof payload.thumbnail === 'string' && payload.thumbnail.startsWith('data:')) delete payload.thumbnail;
-            if (typeof payload.preview_image === 'string' && payload.preview_image.startsWith('data:')) delete payload.preview_image;
+            const data = {
+                product_name: document.getElementById('pf-name').value.trim(),
+                category: document.getElementById('pf-category').value.trim(),
+                price_self_setup: Number(document.getElementById('pf-price-self').value) || 0,
+                price_full_setup: Number(document.getElementById('pf-price-full').value) || 0,
+                badge: document.getElementById('pf-badge').value,
+                status: document.getElementById('pf-status').value,
+                demo_url: document.getElementById('pf-demo-url').value.trim(),
+                powerbi_available: document.getElementById('pf-powerbi').checked,
+                description: document.getElementById('pf-desc').value.trim(),
+                features: document.getElementById('pf-features').value.trim(),
+                technology: document.getElementById('pf-technology').value.trim(),
+                thumbnail_url: thumbnailUrl,
+                preview_image_url: previewUrl
+            };
 
-            const submitBtn = document.querySelector('#admin-product-form button[type="submit"]');
-            if (submitBtn) submitBtn.disabled = true;
-            try {
-                const result = await D2D.auth.call('saveProduct', { product: payload }, true);
-                if (!result || !result.ok) throw new Error((result && result.message) || 'Gagal menyimpan dashboard.');
-                modal().close();
-                await refreshProducts();
-            } catch (err) {
-                handleApiError(err);
-            } finally {
-                if (submitBtn) submitBtn.disabled = false;
-            }
-            return;
+            const { error } = isEdit
+                ? await db().from('products').update(data).eq('id', id)
+                : await db().from('products').insert(data);
+
+            if (error) throw new Error(error.message);
+
+            modal().close();
+            await refreshProducts();
+        } catch (err) {
+            alert(err.message);
+        } finally {
+            if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = 'Simpan Dashboard'; }
         }
-
-        if (isEdit) {
-            const idx = products.findIndex(p => p.product_id === id);
-            products[idx] = { ...products[idx], ...data };
-        } else {
-            products.push({ ...data, rating: 0, review_count: 0, demo_views: '0', purchase_count: 0 });
-        }
-
-        saveProducts();
-        renderTable();
-        modal().close();
     };
 
     const handleTableClick = async (e) => {
@@ -242,77 +198,37 @@ D2D.admin = (() => {
         const deleteId = e.target.dataset.delete;
 
         if (editId) {
-            openForm(products.find(p => p.product_id === editId));
+            openForm(products.find(p => String(p.id) === editId));
             return;
         }
 
         if (toggleId) {
-            const p = products.find(p => p.product_id === toggleId);
+            const p = products.find(p => String(p.id) === toggleId);
             const newStatus = p.status === 'active' ? 'inactive' : 'active';
-
-            if (isRemote()) {
-                e.target.disabled = true;
-                try {
-                    const result = await D2D.auth.call('saveProduct', { product: { product_id: toggleId, status: newStatus } }, true);
-                    if (!result || !result.ok) throw new Error((result && result.message) || 'Gagal mengemaskini status.');
-                    await refreshProducts();
-                } catch (err) {
-                    handleApiError(err);
-                    e.target.disabled = false;
-                }
-                return;
+            e.target.disabled = true;
+            const { error } = await db().from('products').update({ status: newStatus }).eq('id', toggleId);
+            if (error) {
+                alert(error.message);
+                e.target.disabled = false;
+            } else {
+                await refreshProducts();
             }
-
-            p.status = newStatus;
-            saveProducts();
-            renderTable();
             return;
         }
 
         if (deleteId) {
-            const confirmMsg = isRemote()
-                ? 'Padam dashboard ini daripada Google Sheet? Tindakan ini tidak boleh dibatalkan.'
-                : 'Padam dashboard ini daripada koleksi local? Tindakan ini tidak boleh dibatalkan.';
-            if (!confirm(confirmMsg)) return;
-
-            if (isRemote()) {
-                try {
-                    const result = await D2D.auth.call('deleteProduct', { product_id: deleteId }, true);
-                    if (!result || !result.ok) throw new Error((result && result.message) || 'Gagal memadam dashboard.');
-                    await refreshProducts();
-                } catch (err) {
-                    handleApiError(err);
-                }
-                return;
-            }
-
-            products = products.filter(p => p.product_id !== deleteId);
-            saveProducts();
-            renderTable();
+            if (!confirm('Padam dashboard ini daripada Supabase? Tindakan ini tidak boleh dibatalkan.')) return;
+            const { error } = await db().from('products').delete().eq('id', deleteId);
+            if (error) alert(error.message);
+            else await refreshProducts();
         }
     };
 
     // ---------- Login gate ----------
 
-    const showBackendBanner = (el) => {
-        if (!el) return;
-        if (!D2D.auth.isBackendConnected()) {
-            el.hidden = false;
-            el.textContent = '⚠️ Backend (Google Apps Script) belum disambungkan. Login sebenar tidak akan berjaya sehingga GAS_WEB_APP_URL dikonfigurasikan dalam js/config.js.';
-        } else {
-            el.hidden = true;
-        }
-    };
-
     const showDashboard = () => {
         document.getElementById('admin-login-view').hidden = true;
-        const dash = document.getElementById('admin-dashboard-view');
-        dash.hidden = false;
-
-        if (!isRemote()) {
-            showBackendBanner(document.getElementById('admin-connection-banner'));
-        }
-
+        document.getElementById('admin-dashboard-view').hidden = false;
         refreshProducts();
     };
 
@@ -320,16 +236,17 @@ D2D.admin = (() => {
         const form = document.getElementById('admin-login-form');
         const errorEl = document.getElementById('admin-login-error');
 
-        showBackendBanner(document.getElementById('admin-backend-banner'));
-
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             errorEl.hidden = true;
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
 
             const email = document.getElementById('admin-email').value.trim();
             const password = document.getElementById('admin-password').value;
 
             const result = await D2D.auth.login(email, password);
+            submitBtn.disabled = false;
             if (result.ok) {
                 showDashboard();
             } else {
@@ -337,19 +254,6 @@ D2D.admin = (() => {
                 errorEl.hidden = false;
             }
         });
-
-        // Dev Mode: let the UI be reviewed before a real backend exists.
-        // This is NOT authentication — it only appears while no backend is
-        // configured. Once GAS_WEB_APP_URL is set (a real login exists),
-        // the button is removed outright rather than left as a bypass.
-        const devBtn = document.getElementById('admin-dev-preview-btn');
-        const devNote = document.getElementById('admin-dev-note');
-        if (D2D.auth.isBackendConnected()) {
-            if (devBtn) devBtn.remove();
-            if (devNote) devNote.remove();
-        } else if (devBtn) {
-            devBtn.addEventListener('click', () => showDashboard());
-        }
     };
 
     const initLogout = () => {
@@ -367,23 +271,23 @@ D2D.admin = (() => {
         previewImageFile(
             document.getElementById('pf-thumbnail-file'),
             document.getElementById('pf-thumbnail-preview'),
-            (dataUrl) => { pendingThumbnail = dataUrl; }
+            (file) => { pendingThumbnailFile = file; }
         );
         previewImageFile(
             document.getElementById('pf-preview-file'),
             document.getElementById('pf-preview-preview'),
-            (dataUrl) => { pendingPreview = dataUrl; }
+            (file) => { pendingPreviewFile = file; }
         );
 
         D2D.utils.closeDialogOnOutsideClick(modal());
     };
 
-    const init = () => {
+    const init = async () => {
         initLoginForm();
         initLogout();
         initProductManagement();
 
-        if (D2D.auth.isLoggedIn()) {
+        if (await D2D.auth.isLoggedIn()) {
             showDashboard();
         }
     };

@@ -1,3 +1,10 @@
 .DS_Store
 Thumbs.db
 node_modules/
+
+# Supabase / environment secrets — never commit real keys or DB passwords
+.env
+.env.local
+.env.*.local
+supabase/.branches
+supabase/.temp

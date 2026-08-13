@@ -1,11 +1,16 @@
 window.D2D = window.D2D || {};
 
-// Payment Modal: RM90 / RM180 package selection + WhatsApp payment-proof submission
+// Payment Modal: RM90 / RM180 package selection + order logging + WhatsApp
+// payment-proof submission. The order is written to Supabase first
+// (status forced to 'Pending' server-side, see trg_orders_force_pending in
+// the migration) so Dr Excel has a real record even before verifying
+// payment in WhatsApp — matches what Code.gs's submitOrder was for.
 D2D.payment = (() => {
     const paymentModal = document.getElementById('payment-modal');
     const packageOptions = document.querySelectorAll('.package-option');
     const payPackageInput = document.getElementById('pay-package');
     const payPriceEl = document.querySelector('.pay-price');
+    let pendingProductId = null;
 
     const setPackage = (amount) => {
         const packageAmount = Number(amount);
@@ -20,7 +25,7 @@ D2D.payment = (() => {
         if (!paymentModal) return;
         document.getElementById('pay-product-name').textContent = productName;
         document.getElementById('pay-hidden-product').value = productName;
-        // Optionally store product ID if needed for analytics/backend later
+        pendingProductId = productId ? Number(productId) : null;
         setPackage(packageAmount);
         paymentModal.showModal();
     };
@@ -35,7 +40,7 @@ D2D.payment = (() => {
         const btnSubmitWhatsapp = document.getElementById('btn-submit-whatsapp');
         if (!btnSubmitWhatsapp) return;
 
-        btnSubmitWhatsapp.addEventListener('click', () => {
+        btnSubmitWhatsapp.addEventListener('click', async () => {
             const nameInput = document.getElementById('buyer-name');
             const phoneInput = document.getElementById('buyer-phone');
             const productName = document.getElementById('pay-hidden-product').value;
@@ -61,6 +66,22 @@ D2D.payment = (() => {
             if (existingError) existingError.remove();
 
             const packageAmount = payPackageInput ? payPackageInput.value : '90';
+
+            btnSubmitWhatsapp.disabled = true;
+            const { error } = await D2D.supabase.from('orders').insert({
+                product_id: pendingProductId,
+                customer_name: nameInput.value.trim(),
+                phone: phoneInput.value.trim(),
+                package: String(packageAmount),
+                price: Number(packageAmount)
+            });
+            btnSubmitWhatsapp.disabled = false;
+
+            // Even if the order log fails (e.g. offline), the buyer's WhatsApp
+            // hand-off — the actual payment-proof channel — still goes
+            // through; losing the log row isn't worth blocking them here.
+            if (error) console.error('Gagal merekod order:', error.message);
+
             const message = D2D.whatsapp.purchaseMessage(productName, packageAmount, nameInput.value, phoneInput.value);
 
             // Open WhatsApp in new tab
