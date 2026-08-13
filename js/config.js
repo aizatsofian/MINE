@@ -57,7 +57,7 @@ window.D2D = window.D2D || {};
  * local file preview and clearly labels it as not yet uploaded.
  */
 D2D.backendConfig = {
-    GAS_WEB_APP_URL: '', // e.g. 'https://script.google.com/macros/s/XXXXXXX/exec'
+    GAS_WEB_APP_URL: 'https://script.google.com/macros/s/AKfycbwrRBjAHeNFW7e6J1T6wAnP5yYiyWgsII2bnUxVOEVVtw0RcbxKUqruubCUv5IKKIonCw/exec',
 
     isConnected() {
         return Boolean(D2D.backendConfig.GAS_WEB_APP_URL);

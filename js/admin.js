@@ -237,12 +237,16 @@ D2D.admin = (() => {
             }
         });
 
-        // Dev Mode: lets the UI be reviewed before the real backend exists.
-        // This is NOT authentication — there is nothing to bypass yet since
-        // no real backend or credentials exist. It is clearly labeled and
-        // will be removed once D2D.auth.login() talks to a live backend.
+        // Dev Mode: let the UI be reviewed before a real backend exists.
+        // This is NOT authentication — it only appears while no backend is
+        // configured. Once GAS_WEB_APP_URL is set (a real login exists),
+        // the button is removed outright rather than left as a bypass.
         const devBtn = document.getElementById('admin-dev-preview-btn');
-        if (devBtn) {
+        const devNote = document.getElementById('admin-dev-note');
+        if (D2D.auth.isBackendConnected()) {
+            if (devBtn) devBtn.remove();
+            if (devNote) devNote.remove();
+        } else if (devBtn) {
             devBtn.addEventListener('click', () => showDashboard());
         }
     };
